@@ -6,6 +6,7 @@
    - [Ruby 3.3.0](https://www.ruby-lang.org/en/)
    - [Rails 8.0.1](https://rubyonrails.org/)
    - [Bundler](https://bundler.io/)
+   - [Yarn](https://yarnpkg.com/)
 
 2. Clone the repo:
    ```console
