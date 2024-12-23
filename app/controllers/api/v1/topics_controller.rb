@@ -1,4 +1,4 @@
-class TopicsController < ApplicationController
+class Api::V1::TopicsController < ApplicationController
   before_action :set_topic, only: %i[ show update destroy ]
 
   # GET /topics
