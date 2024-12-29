@@ -3,7 +3,7 @@ import { useState } from "react";
 
 function Update({post, handleEditState, handleChange}: 
     {post: Post | null, handleEditState: any, handleChange: any}) {
-    // To return early in case of null post
+    // To return early for null post
     if (!post) {
         return;
     }
@@ -23,6 +23,7 @@ function Update({post, handleEditState, handleChange}:
             post: {topic, content},
         }
 
+        // Send PUT request to server with the updated post data
         try {
             const response = await fetch(`${API_URL}/posts/${post.id}`, {
                 method: "PUT",
@@ -38,7 +39,9 @@ function Update({post, handleEditState, handleChange}:
         } catch(e) {
             alert('Failed to update post');
         }
+        // Toggle back to read mode
         handleEditState();
+        // Update post topic and content in read mode
         handleChange(topic, content);
     }
 

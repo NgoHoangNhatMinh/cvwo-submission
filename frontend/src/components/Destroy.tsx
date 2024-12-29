@@ -1,7 +1,7 @@
 import { Post } from "../interfaces";
 
 async function Destroy(post: Post | null) {
-    // To prevent null post
+    // Return early for null post
     if (!post) {
         return false;
     }

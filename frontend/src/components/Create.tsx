@@ -7,6 +7,7 @@ function Create() {
     const [content, setContent] = useState<string>("");
     const navigate = useNavigate();
 
+    // On submitting form, send POST request to server with the post data
     async function handleSubmit(e: any) {
         e.preventDefault();
 
