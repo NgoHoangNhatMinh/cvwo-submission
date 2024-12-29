@@ -15,24 +15,35 @@ function Show() {
     const [edit, setEdit] = useState<boolean>(false);
 
     async function handleDelete() {
+        // Request DELETE current post to the server
+        // return true for successful deletion and false otherwise
         const success: boolean = await Destroy(post);
 
+        // If DELETE successfully, navigate to homepage
         if (success) {
             navigate(`/`);
         }
     }
 
-    function handleEdit() {
-        // If currently not in edit mode then enter edit mode and update the post
-        // if (!edit) {
-        //     Update(post);
-        // }
-
-        // Toggle between show mode and edit mode
+    // Toggle between edit mode and read mode
+    function handleEditState() {
         setEdit(!edit);
     }
 
-    // fetch post data on mount
+    // After user edit the post information, handleChange fetch the new title and new content
+    // and use setPost to update post information for display in current page
+    function handleChange(topic:string, content:string) {
+        setPost(prevPost => {
+            if (!prevPost) return prevPost
+            return {
+                ...prevPost,
+                topic: topic,
+                content: content,
+            }
+        })
+    }
+
+    // Fetch post data on mount
     useEffect(() => {
         fetch(`${API_URL}/posts/${id}`)
             .then(response => {
@@ -47,10 +58,12 @@ function Show() {
             .catch(error => setError(error.message))
     }, []);
 
+    // If there are no post with this id
     if (!post) {
         return <div>There are no such post</div>
     }
 
+    // While waiting to fetch post data from the server
     if (loading) {
         return <div>Loading...</div>
     }
@@ -60,20 +73,21 @@ function Show() {
     }
 
     if (!edit) {
+        // Read mode
         return (
             <div>
                 <h1>{post.topic}</h1>
                 <p>{post.content}</p>
-                <button onClick={handleEdit}>Edit post</button><br />
+                <button onClick={handleEditState}>Edit post</button><br />
                 <button onClick={handleDelete}>Delete post</button><br />
                 <Link to="/">Go back</Link>
             </div>
         )
     } else if (edit) {
+        // Edit mode
         return <div>
             {/* React component cannot be defined as asynchronous function */}
-            <Update post={post}/>
-            <button onClick={handleEdit}>Go back</button><br />
+            <Update post={post} handleEditState={handleEditState} handleChange={handleChange}/>
         </div>
     }
 }

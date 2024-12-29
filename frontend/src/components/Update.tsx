@@ -1,7 +1,8 @@
 import { Post } from "../interfaces";
 import { useState } from "react";
 
-function Update({post}: {post: Post | null}) {
+function Update({post, handleEditState, handleChange}: 
+    {post: Post | null, handleEditState: any, handleChange: any}) {
     // To return early in case of null post
     if (!post) {
         return;
@@ -13,11 +14,11 @@ function Update({post}: {post: Post | null}) {
     const API_URL: string | undefined = import.meta.env.VITE_API_URL;
 
     async function handleUpdate(e: React.FormEvent) {
+        e.preventDefault()
+
         if (!post)
             return
-        
-        e.preventDefault()
-    
+
         const postData = {
             post: {topic, content},
         }
@@ -31,15 +32,14 @@ function Update({post}: {post: Post | null}) {
                 body: JSON.stringify(postData)
             })
 
-            if (response.ok) {
-                const data = await response.json();
-                alert("Post updated successfully!");
-            } else {
+            if (!response.ok) {
                 alert("Failed to update post");
             }
         } catch(e) {
             alert('Failed to update post');
         }
+        handleEditState();
+        handleChange(topic, content);
     }
 
     return (
