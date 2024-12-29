@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom';
+import { Post } from '../interfaces';
 
 function Index() {
     const API_URL: string | undefined = import.meta.env.VITE_API_URL;
@@ -34,10 +35,13 @@ function Index() {
         return <div>There are no posts</div>
     }
 
+    // Display most recent 10 posts
+    const firstTenPosts: Post[] = posts.slice(0, 10);
+
     return (
         <div>
             {
-                posts.map((post) => {
+                firstTenPosts.map((post) => {
                     return <div>
                         <h2>{"Post " + post.id + " - " + post.topic}</h2>
                         <p>{post.content}</p>
