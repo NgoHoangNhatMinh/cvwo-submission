@@ -1,26 +1,40 @@
 import { useState, useEffect } from 'react'
+import { useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 
-function Index() {
+function Show() {
+    interface Post {
+        id: number;
+        topic: string;
+        content: string;
+        created_at: Date;
+        updated_at: Date;
+    }
+
     const API_URL: string | undefined = import.meta.env.VITE_API_URL;
-    const [posts, setPosts] = useState<any[]>([]);
+    const {id} = useParams();
+    const [post, setPost] = useState<Post | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
     // fetch posts data on mount
     useEffect(() => {
-        fetch(`${API_URL}/posts`)
+        fetch(`${API_URL}/posts/${id}`)
             .then(response => {
                 if (!response.ok)
                     throw new Error('Network response was not ok');
                 return response.json();
             })
             .then(data => {
-                setPosts(data);
+                setPost(data);
                 setLoading(false);
             })
             .catch(error => setError(error.message))
     }, []);
+
+    if (!post) {
+        return <div>There are no such post</div>
+    }
 
     if (loading) {
         return <div>Loading...</div>
@@ -30,23 +44,13 @@ function Index() {
         return <div>{error}</div>;
     }
 
-    if (!posts) {
-        return <div>There are no posts</div>
-    }
-
     return (
         <div>
-            {
-                posts.map((post) => {
-                    return <div>
-                        <h2>{post.topic}</h2>
-                        <p>{post.content}</p>
-                        <Link to={`/posts/${post.id}`}>Go to post</Link>
-                    </div>
-                })
-            }
+            <h1>{post.topic}</h1>
+            <p>{post.content}</p>
+            <Link to="/">Go back</Link>
         </div>
     )
 }
 
-export default Index;
+export default Show;
