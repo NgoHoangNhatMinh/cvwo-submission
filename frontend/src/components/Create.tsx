@@ -31,7 +31,7 @@ function Create() {
                 alert("Failed to create post");
             }
         } catch(e) {
-            alert('Failed to create post.');
+            alert('Failed to create post');
         }
     }
 
