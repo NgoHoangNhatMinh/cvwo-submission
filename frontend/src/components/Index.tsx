@@ -39,7 +39,7 @@ function Index() {
             {
                 posts.map((post) => {
                     return <div>
-                        <h2>{post.topic}</h2>
+                        <h2>{"Post " + post.id + " - " + post.topic}</h2>
                         <p>{post.content}</p>
                         <Link to={`/posts/${post.id}`}>Go to post</Link>
                     </div>

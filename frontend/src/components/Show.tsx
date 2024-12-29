@@ -17,7 +17,7 @@ function Show() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    // fetch posts data on mount
+    // fetch post data on mount
     useEffect(() => {
         fetch(`${API_URL}/posts/${id}`)
             .then(response => {
