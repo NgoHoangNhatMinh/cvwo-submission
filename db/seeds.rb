@@ -8,11 +8,38 @@
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
 
+Category.destroy_all
+
+5.times do |i|
+    Category.create(
+        id: i + 1,
+        name: Faker::Lorem.sentence(word_count: 1),
+        description: Faker::Lorem.paragraph(sentence_count: 1)
+    )
+end
+
 Post.destroy_all
 
-20.times do
+10.times do |i|
     Post.create(
+        id: i + 1,
         topic: Faker::Lorem.sentence(word_count: 3),
-        content: Faker::Lorem.paragraph(sentence_count: 3)
+        content: Faker::Lorem.paragraph(sentence_count: 3),
+        # Arbitrary numbers --> id starts from 1
+        user_id: i % 3 + 1,
+        category_id: i %  5 + 1
+    )
+end
+
+
+Comment.destroy_all
+
+10.times do |i|
+    Comment.create(
+        id: i + 1,
+        content: Faker::Lorem.paragraph(sentence_count: 3),
+        # Arbitrary numbers --> id starts from 1
+        user_id: i % 3 + 1,
+        post_id: i %  7 + 1
     )
 end
