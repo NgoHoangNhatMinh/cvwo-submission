@@ -26,7 +26,7 @@ Post.destroy_all
         topic: Faker::Lorem.sentence(word_count: 3),
         content: Faker::Lorem.paragraph(sentence_count: 3),
         # Arbitrary numbers --> id starts from 1
-        user_id: i % 3 + 1,
+        user_id: i % 10 + 1,
         category_id: i %  5 + 1
     )
 end
@@ -34,12 +34,12 @@ end
 
 Comment.destroy_all
 
-20.times do |i|
+60.times do |i|
     Comment.create(
         id: i + 1,
         content: Faker::Lorem.paragraph(sentence_count: 3),
         # Arbitrary numbers --> id starts from 1
-        user_id: i % 3 + 1,
-        post_id: i %  7 + 1
+        user_id: i % 10 + 1,
+        post_id: i % 20 + 1
     )
 end
