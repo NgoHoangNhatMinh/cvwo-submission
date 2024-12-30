@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Comment } from '../interfaces';
 
-function IndexComments(): JSX.Element {
+function IndexComments({post_id}: {post_id: number}): JSX.Element {
     const API_URL: string | undefined = import.meta.env.VITE_API_URL;
     const [comments, setComments] = useState<Comment[]>([]);
     const [loading, setLoading] = useState<Boolean>(true);
@@ -9,7 +9,7 @@ function IndexComments(): JSX.Element {
 
     // fetch comments data on mount
     useEffect(() => {
-        fetch(`${API_URL}/comments`)
+        fetch(`${API_URL}/posts/${post_id}/comments`)
             .then(response => {
                 if (!response.ok)
                     throw new Error('Network response was not ok');
