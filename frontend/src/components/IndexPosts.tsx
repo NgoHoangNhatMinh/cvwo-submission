@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom';
 import { Post } from '../interfaces';
 
-function Index(): JSX.Element {
+function IndexPosts(): JSX.Element {
     const API_URL: string | undefined = import.meta.env.VITE_API_URL;
     const [posts, setPosts] = useState<Post[]>([]);
     const [loading, setLoading] = useState<Boolean>(true);
@@ -53,4 +53,4 @@ function Index(): JSX.Element {
     )
 }
 
-export default Index;
+export default IndexPosts;

@@ -1,6 +1,6 @@
 import { Post } from "../interfaces";
 
-async function Destroy(post: Post | undefined): Promise<boolean> {
+async function DestroyPost(post: Post | undefined): Promise<boolean> {
     // Return early for empty post
     if (!post) {
         return false;
@@ -31,4 +31,4 @@ async function Destroy(post: Post | undefined): Promise<boolean> {
 }
 
 
-export default Destroy;
+export default DestroyPost;

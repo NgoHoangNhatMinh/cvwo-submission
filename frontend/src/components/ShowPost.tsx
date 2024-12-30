@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-import Destroy from './Destroy';
-import Update from './Update';
+import DestroyPost from './DestroyPost';
+import UpdatePost from './UpdatePost';
 import { Post } from '../interfaces';
 
-function Show(): JSX.Element | undefined {
+function ShowPost(): JSX.Element | undefined {
     // Show may return undefined as user may navigate to a different page after deleting the current post for instance
 
     const API_URL: string | undefined = import.meta.env.VITE_API_URL;
@@ -19,7 +19,7 @@ function Show(): JSX.Element | undefined {
     async function handleDelete() {
         // Request DELETE current post to the server
         // return true for successful deletion and false otherwise
-        const success: boolean = await Destroy(post);
+        const success: boolean = await DestroyPost(post);
 
         // If DELETE successfully, navigate to homepage
         if (success) {
@@ -89,9 +89,9 @@ function Show(): JSX.Element | undefined {
         // Edit mode
         return <div>
             {/* React component cannot be defined as asynchronous function */}
-            <Update post={post} handleEditState={handleEditState} handleChange={handleChange}/>
+            <UpdatePost post={post} handleEditState={handleEditState} handleChange={handleChange}/>
         </div>
     }
 }
 
-export default Show;
+export default ShowPost;

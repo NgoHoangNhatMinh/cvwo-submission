@@ -1,56 +1,48 @@
-import { Post, PostData } from "../interfaces";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { PostData } from "../interfaces";
 
-function Update({post, handleEditState, handleChange}: {post: Post | undefined, handleEditState: any, handleChange: any}): JSX.Element {
-    // To return early for empty post
-    if (!post) {
-        return <div>
-            <h1>Nothing to see here...</h1>
-        </div>;
-    }
-
-    const [topic, setTopic] = useState<string>(post.topic);
-    const [content, setContent] = useState<string>(post.content);
-
+function CreatePost(): JSX.Element {
     const API_URL: string | undefined = import.meta.env.VITE_API_URL;
+    const [topic, setTopic] = useState<string>("");
+    const [content, setContent] = useState<string>("");
+    const navigate = useNavigate();
 
-    async function handleUpdate(e: React.FormEvent) {
-        e.preventDefault()
-
-        if (!post)
-            return
+    // On submitting form, send POST request to server with the post data
+    async function handleSubmit(e: React.FormEvent<HTMLFormElement>): Promise<void> {
+        e.preventDefault();
 
         const postData: PostData = {
             post: {topic, content},
         }
 
-        // Send PUT request to server with the updated post data
         try {
-            const response: Response = await fetch(`${API_URL}/posts/${post.id}`, {
-                method: "PUT",
+            const response = await fetch(`${API_URL}/posts`, {
+                method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify(postData)
             })
 
-            if (!response.ok) {
-                alert("Failed to update post");
+            if (response.ok) {
+                const data = await response.json();
+                alert("Post created successfully!");
+                navigate(`/posts/${data.id}`);
+            } else {
+                alert("Failed to create post");
             }
         } catch(e) {
-            alert('Failed to update post');
+            alert('Failed to create post');
         }
-        // Toggle back to read mode
-        handleEditState();
-        // Update post topic and content in read mode
-        handleChange(topic, content);
     }
 
     return (
         <div>
-            <h1>Editing...</h1>
-            <form onSubmit={handleUpdate}>
-            <div>
+            <p>Create new post</p>
+            <Link to="/">Go back</Link>
+            <form onSubmit={handleSubmit}>
+                <div>
                     <label >Topic: </label>
                     <input 
                         type="text"
@@ -74,5 +66,4 @@ function Update({post, handleEditState, handleChange}: {post: Post | undefined, 
     )
 }
 
-
-export default Update;
+export default CreatePost;

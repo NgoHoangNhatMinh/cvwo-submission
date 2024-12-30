@@ -1,6 +1,6 @@
 import App from "./App";
-import Show from "./components/Show";
-import Create from "./components/Create";
+import ShowPost from "./components/ShowPost";
+import CreatePost from "./components/CreatePost";
 
 const routes = [
   {
@@ -9,11 +9,11 @@ const routes = [
   },
   {
     path: "posts/:id",
-    element: <Show />,
+    element: <ShowPost />,
   },
   {
     path: "posts/new",
-    element: <Create />,
+    element: <CreatePost />,
   }
 ];
 
