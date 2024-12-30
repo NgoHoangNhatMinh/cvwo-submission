@@ -1,17 +1,18 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { PostData } from "../interfaces";
 
-function Create() {
+function Create(): JSX.Element {
     const API_URL: string | undefined = import.meta.env.VITE_API_URL;
     const [topic, setTopic] = useState<string>("");
     const [content, setContent] = useState<string>("");
     const navigate = useNavigate();
 
     // On submitting form, send POST request to server with the post data
-    async function handleSubmit(e: any) {
+    async function handleSubmit(e: React.FormEvent<HTMLFormElement>): Promise<void> {
         e.preventDefault();
 
-        const postData = {
+        const postData: PostData = {
             post: {topic, content},
         }
 

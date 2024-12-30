@@ -5,3 +5,10 @@ export interface Post {
     created_at: Date;
     updated_at: Date;
 }
+
+export interface PostData {
+    post: {
+        topic: string;
+        content: string;
+    }
+}

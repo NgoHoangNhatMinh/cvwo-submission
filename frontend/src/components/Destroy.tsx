@@ -1,7 +1,7 @@
 import { Post } from "../interfaces";
 
-async function Destroy(post: Post | null) {
-    // Return early for null post
+async function Destroy(post: Post | undefined): Promise<boolean> {
+    // Return early for empty post
     if (!post) {
         return false;
     }

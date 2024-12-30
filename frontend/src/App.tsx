@@ -1,5 +1,5 @@
 import './App.css'
-import Index from './components'
+import Index from './components/Index'
 import { Link } from 'react-router-dom'
 
 // Display the homepage - index most recent posts

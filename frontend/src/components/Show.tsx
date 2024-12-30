@@ -5,13 +5,15 @@ import Destroy from './Destroy';
 import Update from './Update';
 import { Post } from '../interfaces';
 
-function Show() {
+function Show(): JSX.Element | undefined {
+    // Show may return undefined as user may navigate to a different page after deleting the current post for instance
+
     const API_URL: string | undefined = import.meta.env.VITE_API_URL;
     const {id} = useParams();
     const navigate = useNavigate();
-    const [post, setPost] = useState<Post | null>(null);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
+    const [post, setPost] = useState<Post | undefined>();
+    const [loading, setLoading] = useState<Boolean>(true);
+    const [error, setError] = useState<String>("");
     const [edit, setEdit] = useState<boolean>(false);
 
     async function handleDelete() {
@@ -26,13 +28,13 @@ function Show() {
     }
 
     // Toggle between edit mode and read mode
-    function handleEditState() {
+    function handleEditState(): void {
         setEdit(!edit);
     }
 
     // After user edit the post information, handleChange fetch the new title and new content
     // and use setPost to update post information for display in current page
-    function handleChange(topic:string, content:string) {
+    function handleChange(topic:string, content:string): void {
         setPost(prevPost => {
             if (!prevPost) return prevPost
             return {

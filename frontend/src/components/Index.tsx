@@ -2,11 +2,11 @@ import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom';
 import { Post } from '../interfaces';
 
-function Index() {
+function Index(): JSX.Element {
     const API_URL: string | undefined = import.meta.env.VITE_API_URL;
-    const [posts, setPosts] = useState<any[]>([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
+    const [posts, setPosts] = useState<Post[]>([]);
+    const [loading, setLoading] = useState<Boolean>(true);
+    const [error, setError] = useState<string>("");
 
     // fetch posts data on mount
     useEffect(() => {
@@ -23,12 +23,12 @@ function Index() {
             .catch(error => setError(error.message))
     }, []);
 
-    if (loading) {
-        return <div>Loading...</div>
-    }
-
     if (error) {
         return <div>{error}</div>;
+    }
+
+    if (loading) {
+        return <div>Loading...</div>
     }
 
     if (!posts) {

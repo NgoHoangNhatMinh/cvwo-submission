@@ -1,11 +1,12 @@
-import { Post } from "../interfaces";
+import { Post, PostData } from "../interfaces";
 import { useState } from "react";
 
-function Update({post, handleEditState, handleChange}: 
-    {post: Post | null, handleEditState: any, handleChange: any}) {
-    // To return early for null post
+function Update({post, handleEditState, handleChange}: {post: Post | undefined, handleEditState: any, handleChange: any}): JSX.Element {
+    // To return early for empty post
     if (!post) {
-        return;
+        return <div>
+            <h1>Nothing to see here...</h1>
+        </div>;
     }
 
     const [topic, setTopic] = useState<string>(post.topic);
@@ -19,13 +20,13 @@ function Update({post, handleEditState, handleChange}:
         if (!post)
             return
 
-        const postData = {
+        const postData: PostData = {
             post: {topic, content},
         }
 
         // Send PUT request to server with the updated post data
         try {
-            const response = await fetch(`${API_URL}/posts/${post.id}`, {
+            const response: Response = await fetch(`${API_URL}/posts/${post.id}`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
