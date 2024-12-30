@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import DestroyPost from './DestroyPost';
 import UpdatePost from './UpdatePost';
 import { Post } from '../interfaces';
+import IndexComments from './IndexComments';
 
 function ShowPost(): JSX.Element | undefined {
     // Show may return undefined as user may navigate to a different page after deleting the current post for instance
@@ -79,7 +80,8 @@ function ShowPost(): JSX.Element | undefined {
         return (
             <div>
                 <h1>{post.topic}</h1>
-                <p>{post.content}</p>
+                <h2>{post.content}</h2>
+                <IndexComments />
                 <button onClick={handleEditState}>Edit post</button><br />
                 <button onClick={handleDelete}>Delete post</button><br />
                 <Link to="/">Go back</Link>
