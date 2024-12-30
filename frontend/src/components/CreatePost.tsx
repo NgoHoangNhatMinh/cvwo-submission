@@ -13,7 +13,9 @@ function CreatePost(): JSX.Element {
         e.preventDefault();
 
         const postData: PostData = {
-            post: {topic, content},
+            // FIX HOW TO FETCH CURRENT USER AND CATEGORY
+            // CURRENTLY USING DEFAULT ID=1
+            post: {topic, content, user_id: 1, category_id: 1},
         }
 
         try {
@@ -24,12 +26,13 @@ function CreatePost(): JSX.Element {
                 },
                 body: JSON.stringify(postData)
             })
-
+            
+            const data = await response.json();
             if (response.ok) {
-                const data = await response.json();
                 alert("Post created successfully!");
                 navigate(`/posts/${data.id}`);
             } else {
+                console.error("Validation errors:", data.errors);
                 alert("Failed to create post");
             }
         } catch(e) {
