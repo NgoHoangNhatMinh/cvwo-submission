@@ -1,24 +1,42 @@
-# README
+# CVWO 2025 Assignment
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Local Installation
 
-Things you may want to cover:
+1. You need the following prerequisites:
+   - [Ruby 3.4.1](https://www.ruby-lang.org/en/)
+   - [Rails 8.0.1](https://rubyonrails.org/)
+   - [Node.js and npm](https://nodejs.org/en)
+   - [SQLite](https://www.sqlite.org/download.html)
+   - [Bundler](https://bundler.io/)
 
-* Ruby version
+2. Clone the repo:
+   ```console
+   $ git clone https://github.com/NgoHoangNhatMinh/cvwo-submission.git
+   ```
 
-* System dependencies
+3. Installing dependencies:
+   ```console
+   $ bundle install
+   ```
+   ```console
+   $ npm install
+   ```
 
-* Configuration
+4. Setup the database:
+   ```console
+   $ rails db:create
+   $ rails db:seed
+   ```
 
-* Database creation
+5. Start the Rails server:
+   ```console
+   $ rails s
+   ```
 
-* Database initialization
+6. Start the React frontend:
+   ```console
+   $ cd frontend
+   $ npm start
+   ```
 
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+6. Open the web application from the link `localhost:5173`
