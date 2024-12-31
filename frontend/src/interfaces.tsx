@@ -26,10 +26,25 @@ export interface Comment {
     post_id: number;
 }
 
-export interface Comment {
+export interface CommentData {
+    comment: {
+        content: string;
+        user_id: number;
+        post_id: number;
+    }
+}
+
+export interface Category {
     id: number;
     name: string;
     description: string;
     created_at: Date;
     updated_at: Date;
+}
+
+export interface CategoryData {
+    category: {
+        name: string;
+        description: string;
+    }
 }

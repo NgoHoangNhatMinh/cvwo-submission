@@ -5,7 +5,7 @@ class CommentsController < ApplicationController
   def index
     if params[:post_id]
     # only return comments belonging to the post
-      @comments = Comment.where(post_id: params[:post_id])
+      @comments = Comment.where(post_id: params[:post_id]).order(created_at: :desc)
     else
       @comments = Comment.all
     end
