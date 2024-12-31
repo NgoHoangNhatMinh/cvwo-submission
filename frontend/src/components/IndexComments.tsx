@@ -1,11 +1,22 @@
 import { useState, useEffect } from 'react'
 import { Comment } from '../interfaces';
+import DestroyComment from './DestroyComment';
 
 function IndexComments({post_id}: {post_id: number}): JSX.Element {
     const API_URL: string | undefined = import.meta.env.VITE_API_URL;
     const [comments, setComments] = useState<Comment[]>([]);
     const [loading, setLoading] = useState<Boolean>(true);
     const [error, setError] = useState<string>("");
+
+    async function handleDelete(comment: Comment) {
+        // Request DELETE current post to the server
+        // return true for successful deletion and false otherwise
+        const success: boolean = await DestroyComment(comment);
+
+        // If DELETE successfully?
+        if (success) {
+        }
+    }
 
     // fetch comments data on mount
     useEffect(() => {
@@ -44,6 +55,7 @@ function IndexComments({post_id}: {post_id: number}): JSX.Element {
                 firstTenComments.map((comment) => {
                     return <div>
                         <p>{comment.content}</p>
+                        <button onClick={() => handleDelete(comment)}>Delete comment</button>
                     </div>
                 })
             }
