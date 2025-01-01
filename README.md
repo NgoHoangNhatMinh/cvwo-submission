@@ -36,7 +36,7 @@
 6. Start the React frontend:
    ```console
    $ cd frontend
-   $ npm start
+   $ npm run dev
    ```
 
 6. Open the web application from the link `localhost:5173`
