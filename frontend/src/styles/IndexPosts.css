@@ -1,0 +1,9 @@
+.Post {
+    border: 2px solid gray;
+    margin: 20px 10px 20px;
+    border-radius: 10px;
+}
+
+.Post:hover {
+    cursor: pointer;
+}

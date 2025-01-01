@@ -37,7 +37,7 @@ function CreateComment({post_id}: {post_id: number}): JSX.Element {
     }
 
     return (
-        <div>
+        <div className="AddComment">
             <p>Add comment</p>
             <form onSubmit={handleSubmit}>
                 <div>

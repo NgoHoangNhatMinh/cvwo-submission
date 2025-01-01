@@ -1,6 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { PostData } from "../interfaces";
+import "../styles/CreatePost.css"
 
 function CreatePost(): JSX.Element {
     const API_URL: string | undefined = import.meta.env.VITE_API_URL;
@@ -41,8 +42,8 @@ function CreatePost(): JSX.Element {
     }
 
     return (
-        <div>
-            <p>Create new post</p>
+        <div className="CreatePost">
+            <h1>Create new post</h1>
             <Link to="/">Go back</Link>
             <form onSubmit={handleSubmit}>
                 <div>

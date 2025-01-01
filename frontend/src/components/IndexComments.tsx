@@ -49,7 +49,7 @@ function IndexComments({post_id}: {post_id: number}): JSX.Element {
     const firstTenComments: Comment[] = comments.slice(0, 10);
 
     return (
-        <div>
+        <div className="CommentsContainer">
             <h3>Comments:</h3>
             {
                 firstTenComments.map((comment) => {

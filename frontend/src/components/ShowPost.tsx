@@ -6,6 +6,7 @@ import UpdatePost from './UpdatePost';
 import { Post } from '../interfaces';
 import IndexComments from './IndexComments';
 import CreateComment from './CreateComment';
+import "../styles/ShowPost.css"
 
 function ShowPost(): JSX.Element | undefined {
     // Show may return undefined as user may navigate to a different page after deleting the current post for instance
@@ -80,10 +81,12 @@ function ShowPost(): JSX.Element | undefined {
         // Read mode
         return (
             <div>
-                <h1>{post.topic}</h1>
-                <h2>{post.content}</h2>
-                <button onClick={handleEditState}>Edit post</button><br />
-                <button onClick={handleDelete}>Delete post</button><br />
+                <div className="PostContainer">
+                    <h1>{post.topic}</h1>
+                    <h2>{post.content}</h2>
+                    <button onClick={handleEditState}>Edit post</button><br />
+                    <button onClick={handleDelete}>Delete post</button><br />
+                </div>
                 
                 <CreateComment post_id={Number(id)}/>
                 <IndexComments post_id={post.id}/>

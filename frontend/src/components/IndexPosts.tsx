@@ -1,12 +1,18 @@
 import { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Post } from '../interfaces';
+import '../styles/IndexPosts.css'
 
 function IndexPosts(): JSX.Element {
     const API_URL: string | undefined = import.meta.env.VITE_API_URL;
+    const navigate = useNavigate();
     const [posts, setPosts] = useState<Post[]>([]);
     const [loading, setLoading] = useState<Boolean>(true);
     const [error, setError] = useState<string>("");
+
+    function navigateToPost(id: number) {
+        navigate(`/posts/${id}`);
+    }
 
     // fetch posts data on mount
     useEffect(() => {
@@ -39,13 +45,12 @@ function IndexPosts(): JSX.Element {
     const firstTenPosts: Post[] = posts.slice(0, 10);
 
     return (
-        <div>
+        <div className="PostsContainer">
             {
                 firstTenPosts.map((post) => {
-                    return <div>
+                    return <div onClick={() => navigateToPost(post.id)} className="Post">
                         <h2>{"Post " + post.id + " - " + post.topic}</h2>
                         <p>{post.content}</p>
-                        <Link to={`/posts/${post.id}`}>Go to post</Link>
                     </div>
                 })
             }
