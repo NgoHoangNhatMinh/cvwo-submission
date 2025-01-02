@@ -84,8 +84,8 @@ function ShowPost(): JSX.Element | undefined {
                 <div className="PostContainer">
                     <h1>{post.topic}</h1>
                     <h2>{post.content}</h2>
-                    <button onClick={handleEditState}>Edit post</button><br />
-                    <button onClick={handleDelete}>Delete post</button><br />
+                    <button onClick={handleEditState}>Edit post</button>
+                    <button onClick={handleDelete}>Delete post</button>
                 </div>
                 
                 <CreateComment post_id={Number(id)}/>

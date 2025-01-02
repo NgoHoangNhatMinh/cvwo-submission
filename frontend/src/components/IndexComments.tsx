@@ -1,21 +1,41 @@
 import { useState, useEffect } from 'react'
 import { Comment } from '../interfaces';
 import DestroyComment from './DestroyComment';
+import UpdateComment from './UpdateComment';
 
 function IndexComments({post_id}: {post_id: number}): JSX.Element {
     const API_URL: string | undefined = import.meta.env.VITE_API_URL;
     const [comments, setComments] = useState<Comment[]>([]);
     const [loading, setLoading] = useState<Boolean>(true);
     const [error, setError] = useState<string>("");
+    const [edit, setEdit] = useState<Record<number,boolean>>({});
 
     async function handleDelete(comment: Comment) {
         // Request DELETE current post to the server
         // return true for successful deletion and false otherwise
         const success: boolean = await DestroyComment(comment);
 
-        // If DELETE successfully?
+        // If DELETE successfully, stop displaying comment
         if (success) {
+            setComments((prevComments) =>
+                prevComments.filter((c) => c.id !== comment.id)
+            );
         }
+    }
+
+    function handleEdit(comment: Comment) {
+        setEdit(prevEdit => ({
+            ...prevEdit,
+            [comment.id]: !prevEdit[comment.id], 
+        }))
+    }
+
+    function handleChange(updatedContent: string, id: number) {
+        setComments(prevComments => prevComments.map(
+            comment => comment.id === id
+                ? {...comment, content: updatedContent}
+                : comment 
+        ))
     }
 
     // fetch comments data on mount
@@ -53,10 +73,17 @@ function IndexComments({post_id}: {post_id: number}): JSX.Element {
             <h3>Comments:</h3>
             {
                 firstTenComments.map((comment) => {
-                    return <div>
-                        <p>{comment.content}</p>
-                        <button onClick={() => handleDelete(comment)}>Delete comment</button>
-                    </div>
+                    if (!edit[comment.id]) {
+                        return <div>
+                            <p>{comment.content}</p>
+                            <button onClick={() => handleEdit(comment)}>Edit</button>
+                            <button onClick={() => handleDelete(comment)}>Delete comment</button>
+                        </div>
+                    } else {
+                        return <div>
+                            <UpdateComment comment={comment} handleEditState={handleEdit} handleChange={handleChange}/>
+                        </div>
+                    }
                 })
             }
         </div>
