@@ -88,7 +88,6 @@ function ShowPost(): JSX.Element | undefined {
                     <button onClick={handleDelete}>Delete post</button>
                 </div>
                 
-                <CreateComment post_id={Number(id)}/>
                 <IndexComments post_id={post.id}/>
                 <Link to="/">Go back</Link>
             </div>

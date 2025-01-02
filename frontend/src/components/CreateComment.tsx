@@ -1,7 +1,7 @@
 import { CommentData } from "../interfaces";
 import { useState } from "react";
 
-function CreateComment({post_id}: {post_id: number}): JSX.Element {
+function CreateComment({post_id, handleNew}: {post_id: number, handleNew: any}): JSX.Element {
     const API_URL: string | undefined = import.meta.env.VITE_API_URL;
     const [content, setContent] = useState<string>("");
     
@@ -26,6 +26,7 @@ function CreateComment({post_id}: {post_id: number}): JSX.Element {
             
             const data = await response.json();
             if (response.ok) {
+                handleNew(data);
                 alert("Comment created successfully!");
             } else {
                 console.error("Validation errors:", data.errors);
@@ -34,6 +35,7 @@ function CreateComment({post_id}: {post_id: number}): JSX.Element {
         } catch(e) {
             alert('Failed to create comment');
         }
+        setContent("");
     }
 
     return (

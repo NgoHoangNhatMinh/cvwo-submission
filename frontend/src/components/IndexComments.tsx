@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { Comment } from '../interfaces';
 import DestroyComment from './DestroyComment';
 import UpdateComment from './UpdateComment';
+import CreateComment from './CreateComment';
 
 function IndexComments({post_id}: {post_id: number}): JSX.Element {
     const API_URL: string | undefined = import.meta.env.VITE_API_URL;
@@ -30,12 +31,18 @@ function IndexComments({post_id}: {post_id: number}): JSX.Element {
         }))
     }
 
+    // So that updated comment appears immediately without having to reload page to fetch from server
     function handleChange(updatedContent: string, id: number) {
         setComments(prevComments => prevComments.map(
             comment => comment.id === id
                 ? {...comment, content: updatedContent}
                 : comment 
         ))
+    }
+
+    // So that new comment appears immediately without having to reload page to fetch from server
+    function handleNew(comment: Comment) {
+        setComments(prevComments => [comment, ...prevComments])
     }
 
     // fetch comments data on mount
@@ -70,6 +77,7 @@ function IndexComments({post_id}: {post_id: number}): JSX.Element {
 
     return (
         <div className="CommentsContainer">
+            <CreateComment post_id={post_id} handleNew={handleNew}/>
             <h3>Comments:</h3>
             {
                 firstTenComments.map((comment) => {
