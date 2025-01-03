@@ -3,6 +3,7 @@ import { Comment } from '../interfaces';
 import DestroyComment from './DestroyComment';
 import UpdateComment from './UpdateComment';
 import CreateComment from './CreateComment';
+import "../styles/Comment.css"
 
 function IndexComments({post_id}: {post_id: number}): JSX.Element {
     const API_URL: string | undefined = import.meta.env.VITE_API_URL;
@@ -78,22 +79,24 @@ function IndexComments({post_id}: {post_id: number}): JSX.Element {
     return (
         <div className="CommentsContainer">
             <CreateComment post_id={post_id} handleNew={handleNew}/>
-            <h3>Comments:</h3>
-            {
-                firstTenComments.map((comment) => {
-                    if (!edit[comment.id]) {
-                        return <div>
-                            <p>{comment.content}</p>
-                            <button onClick={() => handleEdit(comment)}>Edit</button>
-                            <button onClick={() => handleDelete(comment)}>Delete comment</button>
-                        </div>
-                    } else {
-                        return <div>
-                            <UpdateComment comment={comment} handleEditState={handleEdit} handleChange={handleChange}/>
-                        </div>
-                    }
-                })
-            }
+            <div className="Comments">
+                <h3>Comments:</h3>
+                {
+                    firstTenComments.map((comment) => {
+                        if (!edit[comment.id]) {
+                            return <div>
+                                <p>{comment.content}</p>
+                                <button onClick={() => handleEdit(comment)}>Edit</button>
+                                <button onClick={() => handleDelete(comment)}>Delete comment</button>
+                            </div>
+                        } else {
+                            return <div>
+                                <UpdateComment comment={comment} handleEditState={handleEdit} handleChange={handleChange}/>
+                            </div>
+                        }
+                    })
+                }
+            </div>
         </div>
     )
 }

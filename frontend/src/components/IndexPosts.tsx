@@ -47,7 +47,6 @@ function IndexPosts(): JSX.Element {
     return (
         <div className="PostsContainer">
             <h1>Posts</h1>
-            <Link to="/posts/new">Create new post</Link>
             {
                 firstTenPosts.map((post) => {
                     return <div onClick={() => navigateToPost(post.id)} className="Post">

@@ -1,13 +1,12 @@
 import "../styles/Layout.css"
+import { Link } from "react-router-dom";
 
 function Header() {
     return <div className="HeaderContainer">
-        <h1 className="Logo">Logo</h1>
+        <Link to="/" className="Logo">Logo</Link>
         <div className="Options">
-            <p>Option 1</p>
-            <p>Option 2</p>
-            <p>Option 3</p>
-            <p>Menu</p>
+            <Link to="/posts/new" className="CreateOption">+ Create</Link>
+            <p>Profile</p>
         </div>
     </div>
 }

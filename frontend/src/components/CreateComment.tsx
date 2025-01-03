@@ -1,5 +1,6 @@
 import { CommentData } from "../interfaces";
 import { useState } from "react";
+import "../styles/Comment.css"
 
 function CreateComment({post_id, handleNew}: {post_id: number, handleNew: any}): JSX.Element {
     const API_URL: string | undefined = import.meta.env.VITE_API_URL;
