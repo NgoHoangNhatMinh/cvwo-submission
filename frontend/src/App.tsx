@@ -1,14 +1,18 @@
 import './App.css'
-import IndexPosts from './components/IndexPosts'
-import { Link } from 'react-router-dom'
+import { Link, Outlet } from 'react-router-dom'
+import Header from './components/Header'
+import Footer from './components/Footer'
 
 // Display the homepage - index most recent posts
 function App() {
   return (
     <div>
-      <h1>Posts</h1>
-      <Link to="/posts/new">Create new post</Link>
-      <IndexPosts />
+      {/* Display header and foot in all pages */}
+      <Header/>
+      <main>
+        <Outlet/>
+      </main>
+      <Footer/>
     </div>
   )
 }
