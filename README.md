@@ -29,24 +29,20 @@
    $ rails db:seed
    ```
 
-5. Create an env file with routing to the backend:
-   In the frontend directory, create .env file. Paste:
+5. Create an .env file in the frontend directory and paste:
    ```
    VITE_API_URL=http://localhost:3000/
    ```
-   and save.
 
-5. Start the Rails server:
+6. Start the Rails server:
    ```console
    $ rails s
    ```
 
-6. Start the React frontend:
+7. Start the React frontend:
    ```console
    $ cd frontend
    $ npm run dev
-   ```
-
-7.  
+   ```  
 
 8. Open the web application from the link `localhost:5173`
