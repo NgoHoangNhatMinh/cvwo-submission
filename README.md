@@ -25,8 +25,16 @@
 4. Setup the database:
    ```console
    $ rails db:create
+   $ rails db:migrate
    $ rails db:seed
    ```
+
+5. Create an env file with routing to the backend:
+   In the frontend directory, create .env file. Paste:
+   ```
+   VITE_API_URL=http://localhost:3000/
+   ```
+   and save.
 
 5. Start the Rails server:
    ```console
@@ -39,4 +47,6 @@
    $ npm run dev
    ```
 
-6. Open the web application from the link `localhost:5173`
+7.  
+
+8. Open the web application from the link `localhost:5173`
