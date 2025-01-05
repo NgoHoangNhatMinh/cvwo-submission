@@ -4,7 +4,6 @@ import { useState } from "react";
 function Login() {
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
-    const navigate = useNavigate();
 
     async function handleLogin(event: any) {
         event.preventDefault();

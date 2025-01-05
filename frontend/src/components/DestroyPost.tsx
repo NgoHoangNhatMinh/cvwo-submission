@@ -9,7 +9,7 @@ async function DestroyPost(post: Post | undefined): Promise<boolean> {
     const API_URL: string | undefined = import.meta.env.VITE_API_URL;
     const token = localStorage.getItem('auth_token');
 
-    alert(`You are deleting \"${post.topic}\"`);
+    // alert(`You are deleting \"${post.topic}\"`);
 
     try {
         const response = await fetch(`${API_URL}/posts/${post.id}`, {
