@@ -2,7 +2,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { PostData } from "../interfaces";
 import "../styles/CreatePost.css"
-import { handleLogin } from "./Authentication";
 
 function CreatePost(): JSX.Element {
     const API_URL: string | undefined = import.meta.env.VITE_API_URL;
