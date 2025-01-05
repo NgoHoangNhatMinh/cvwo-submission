@@ -20,10 +20,12 @@ function UpdatePost({post, handleEditState, handleChange}: {post: Post | undefin
         if (!post)
             return
 
+        const token = localStorage.getItem('auth_token');
+
         const postData: PostData = {
             // FIX HOW TO FETCH CURRENT USER AND CATEGORY
             // CURRENTLY USING DEFAULT ID=1
-            post: {topic, content, user_id: 1, category_id: 1},
+            post: {topic, content, category_id: 1},
         }
 
         // Send PUT request to server with the updated post data
@@ -32,12 +34,15 @@ function UpdatePost({post, handleEditState, handleChange}: {post: Post | undefin
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
+                    "Authorization": `${token}`
                 },
                 body: JSON.stringify(postData)
             })
 
             if (!response.ok) {
                 alert("Failed to update post");
+            } else {
+                handleChange(topic, content);
             }
         } catch(e) {
             alert('Failed to update post');
@@ -45,7 +50,6 @@ function UpdatePost({post, handleEditState, handleChange}: {post: Post | undefin
         // Toggle back to read mode
         handleEditState();
         // Update post topic and content in read mode
-        handleChange(topic, content);
     }
 
     return (

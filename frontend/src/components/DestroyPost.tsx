@@ -7,6 +7,7 @@ async function DestroyPost(post: Post | undefined): Promise<boolean> {
     }
 
     const API_URL: string | undefined = import.meta.env.VITE_API_URL;
+    const token = localStorage.getItem('auth_token');
 
     alert(`You are deleting \"${post.topic}\"`);
 
@@ -15,6 +16,7 @@ async function DestroyPost(post: Post | undefined): Promise<boolean> {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",
+                "Authorization": `${token}`
             },
         })
 
