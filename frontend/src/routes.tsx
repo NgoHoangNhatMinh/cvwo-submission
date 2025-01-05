@@ -2,6 +2,7 @@ import App from "./App";
 import ShowPost from "./components/ShowPost";
 import CreatePost from "./components/CreatePost";
 import IndexPosts from "./components/IndexPosts";
+import Login from "./components/Login";
 
 const routes = [
   {
@@ -19,6 +20,10 @@ const routes = [
       {
         path: "posts/new",
         element: <CreatePost />,
+      },
+      {
+        path: "login",
+        element: <Login />,
       }
     ]
   }

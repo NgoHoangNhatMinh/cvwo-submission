@@ -12,7 +12,6 @@ export interface PostData {
     post: {
         topic: string;
         content: string;
-        user_id: number;
         category_id: number;
     }
 }
