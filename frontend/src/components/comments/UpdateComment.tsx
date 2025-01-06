@@ -1,12 +1,14 @@
 import { useState } from "react";
 import { Comment, CommentData } from "../../interfaces";
 
-function UpdateComment({comment, handleEditState, handleChange}: {comment: Comment, handleEditState: any, handleChange: any}) {
+function UpdateComment({comment, handleEditState, handleChange, navigate}: {comment: Comment, handleEditState: any, handleChange: any, navigate: any}) {
     const API_URL: string | undefined = import.meta.env.VITE_API_URL;
     const [content, setContent] = useState<string>(comment.content);
 
     async function handleSubmit(e: any) {
         e.preventDefault();
+
+        const token = localStorage.getItem('auth_token');
 
         const commentData: CommentData = {
             comment: {
@@ -20,11 +22,14 @@ function UpdateComment({comment, handleEditState, handleChange}: {comment: Comme
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
+                    "Authorization": `${token}`
                 },
                 body: JSON.stringify(commentData)
             });
-
-            if (response.ok) {
+            if (response.status === 401) {
+                alert("You must log in first")
+                navigate("/login")
+            } else if (response.ok) {
                 alert("Update successfully");
             } else {
                 alert("Failed to update comment");

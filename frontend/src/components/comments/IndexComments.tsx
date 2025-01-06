@@ -4,6 +4,7 @@ import DestroyComment from './DestroyComment';
 import UpdateComment from './UpdateComment';
 import CreateComment from './CreateComment';
 import "../../styles/Comment.css"
+import { useNavigate } from 'react-router-dom';
 
 function IndexComments({post_id}: {post_id: number}): JSX.Element {
     const API_URL: string | undefined = import.meta.env.VITE_API_URL;
@@ -11,11 +12,12 @@ function IndexComments({post_id}: {post_id: number}): JSX.Element {
     const [loading, setLoading] = useState<Boolean>(true);
     const [error, setError] = useState<string>("");
     const [edit, setEdit] = useState<Record<number,boolean>>({});
+    const navigate = useNavigate();
 
     async function handleDelete(comment: Comment) {
         // Request DELETE current post to the server
         // return true for successful deletion and false otherwise
-        const success: boolean = await DestroyComment(comment);
+        const success: boolean = await DestroyComment(comment, navigate);
 
         // If DELETE successfully, stop displaying comment
         if (success) {
@@ -78,7 +80,7 @@ function IndexComments({post_id}: {post_id: number}): JSX.Element {
 
     return (
         <div className="CommentsContainer">
-            <CreateComment post_id={post_id} handleNew={handleNew}/>
+            <CreateComment post_id={post_id} handleNew={handleNew} navigate={navigate}/>
             <div className="Comments">
                 <h3>Comments:</h3>
                 {
@@ -91,7 +93,7 @@ function IndexComments({post_id}: {post_id: number}): JSX.Element {
                             </div>
                         } else {
                             return <div>
-                                <UpdateComment comment={comment} handleEditState={handleEdit} handleChange={handleChange}/>
+                                <UpdateComment comment={comment} handleEditState={handleEdit} handleChange={handleChange} navigate={navigate}/>
                             </div>
                         }
                     })

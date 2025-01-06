@@ -2,7 +2,7 @@ import { CommentData } from "../../interfaces";
 import { useState } from "react";
 import "../../styles/Comment.css"
 
-function CreateComment({post_id, handleNew}: {post_id: number, handleNew: any}): JSX.Element {
+function CreateComment({post_id, handleNew, navigate}: {post_id: number, handleNew: any, navigate: any}): JSX.Element {
     const API_URL: string | undefined = import.meta.env.VITE_API_URL;
     const [content, setContent] = useState<string>("");
     
@@ -10,6 +10,7 @@ function CreateComment({post_id, handleNew}: {post_id: number, handleNew: any}):
     async function handleSubmit(e: React.FormEvent<HTMLFormElement>): Promise<void> {
         e.preventDefault();
 
+        const token = localStorage.getItem('auth_token');
         const commentData: CommentData = {
             // FIX HOW TO FETCH CURRENT USER AND CATEGORY
             // CURRENTLY USING DEFAULT ID=1
@@ -21,16 +22,19 @@ function CreateComment({post_id, handleNew}: {post_id: number, handleNew: any}):
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
+                    "Authorization": `${token}`
                 },
                 body: JSON.stringify(commentData)
             })
             
-            const data = await response.json();
-            if (response.ok) {
+            if (response.status === 401) {
+                alert("You must log in first")
+                navigate("/login")
+            } else if (response.ok) {
+                const data = await response.json();
                 handleNew(data);
                 alert("Comment created successfully!");
             } else {
-                console.error("Validation errors:", data.errors);
                 alert("Failed to create comment");
             }
         } catch(e) {
