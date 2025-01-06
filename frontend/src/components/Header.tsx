@@ -2,6 +2,7 @@ import "../styles/Layout.css"
 import { Link, useNavigate } from "react-router-dom";
 import Logout from "./authorization/Logout";
 import { useAuth } from "./authorization/AuthContex";
+import { useEffect } from "react";
 
 function Header() {
     const {loggedIn, setLoggedIn} = useAuth();
@@ -23,6 +24,15 @@ function Header() {
     function handleProfile() {
 
     }
+
+    useEffect(() => {
+        const token = localStorage.getItem('auth_token');
+        if (token === null) {
+            setLoggedIn(false);
+        } else {
+            setLoggedIn(true);
+        }
+    }, [loggedIn])
 
     return <div className="HeaderContainer">
         <Link to="/" className="Logo">Logo</Link>
