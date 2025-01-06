@@ -2,9 +2,12 @@ import "../styles/Layout.css"
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "./contexts/AuthContex";
 import { useEffect } from "react";
+import { useUser } from "./contexts/UserContext";
 
 function Header() {
     const {loggedIn, setLoggedIn} = useAuth();
+    const {setUser} = useUser();
+    const API_URL: string | undefined = import.meta.env.VITE_API_URL;
     const navigate = useNavigate();
 
     function handleLogout() {
@@ -34,10 +37,18 @@ function Header() {
         const token = localStorage.getItem('auth_token');
         if (token === null) {
             setLoggedIn(false);
+            setUser(undefined);
         } else {
             setLoggedIn(true);
+            fetch(`${API_URL}/current_user`, {
+                headers: {
+                    "Authorization": `${token}`
+                }
+            })
+                .then(response => response.json())
+                .then(data => setUser(data))
         }
-    }, [loggedIn])
+    }, [])
 
     return <div className="HeaderContainer">
         <Link to="/" className="Logo">Logo</Link>

@@ -19,11 +19,13 @@ function Login() {
         });
         if (response.ok) {
             const data = await response.json()
-            alert("Log in successfully")
             const token = response.headers.get("Authorization") + "";
+            const userData = data.data;
             localStorage.setItem('auth_token', token);
+            localStorage.setItem('user_data', userData)
             setLoggedIn(true);
-            setUser(data.data);
+            setUser(userData);
+            alert("Log in successfully")
             navigate("/")
         } else {
             alert("No such user")
