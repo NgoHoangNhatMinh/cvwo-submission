@@ -17,6 +17,10 @@ function Header() {
         navigate("/login");
     }
 
+    function handleSignup() {
+        navigate("/signup");
+    }
+
     function handleCreate() {
         navigate("/posts/new")
     }
@@ -44,7 +48,10 @@ function Header() {
                     <button onClick={handleProfile}>Profile</button>
                 </> 
                 // : <Link to="/login" className="LoginOption">Log In</Link>
-                : <button onClick={handleLogin}>Log in</button>
+                : <>
+                    <button onClick={handleSignup}>Sign up</button>
+                    <button onClick={handleLogin}>Log in</button>
+                </>
             }
         </div>
     </div>

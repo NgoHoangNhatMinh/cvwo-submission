@@ -3,6 +3,7 @@ import ShowPost from "./components/posts/ShowPost";
 import CreatePost from "./components/posts/CreatePost";
 import IndexPosts from "./components/posts/IndexPosts";
 import Login from "./components/authorization/Login";
+import Signup from "./components/authorization/Signup";
 
 const routes = [
   {
@@ -24,6 +25,10 @@ const routes = [
       {
         path: "login",
         element: <Login />,
+      },
+      {
+        path: "signup",
+        element: <Signup />,
       }
     ]
   }

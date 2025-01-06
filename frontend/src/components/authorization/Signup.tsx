@@ -6,7 +6,7 @@ function Signup() {
     const [password, setPassword] = useState<string>("");
     const navigate = useNavigate();
 
-    async function handleLogin(event: any) {
+    async function handleSignup(event: any) {
         event.preventDefault();
         const response = await fetch('http://localhost:3000/signup', {
           method: 'POST',
@@ -26,7 +26,7 @@ function Signup() {
     return <div>
         <h1>Signing up...</h1>
         <Link to="/">Go back</Link>
-        <form onSubmit={handleLogin}>
+        <form onSubmit={handleSignup}>
                 <div>
                     <label >Email: </label>
                     <input 
