@@ -14,7 +14,6 @@ function CreatePost(): JSX.Element {
         e.preventDefault();
 
         const token = localStorage.getItem('auth_token');
-        // const token = "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJhNzJkNTVjMS1mNWMwLTRhYWMtOWNiZi01ZDI3YmVjMzNmNGQiLCJzdWIiOiIxIiwic2NwIjoidXNlciIsImF1ZCI6bnVsbCwiaWF0IjoxNzM2MDc5OTUyLCJleHAiOjE3MzYwODE3NTJ9.pvghSZnU5MJ1AUVvN49Z-eaehxamE3sZAIthr8li_6g";
         const postData: PostData = {
             // FIX HOW TO FETCH AND CATEGORY
             // CURRENTLY USING DEFAULT ID=1
