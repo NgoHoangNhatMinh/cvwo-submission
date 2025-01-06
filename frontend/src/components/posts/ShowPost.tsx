@@ -21,7 +21,7 @@ function ShowPost(): JSX.Element | undefined {
     async function handleDelete() {
         // Request DELETE current post to the server
         // return true for successful deletion and false otherwise
-        const success: boolean = await DestroyPost(post);
+        const success: boolean = await DestroyPost(post, navigate);
 
         // If DELETE successfully, navigate to homepage
         if (success) {
@@ -95,7 +95,7 @@ function ShowPost(): JSX.Element | undefined {
         // Edit mode
         return <div>
             {/* React component cannot be defined as asynchronous function */}
-            <UpdatePost post={post} handleEditState={handleEditState} handleChange={handleChange}/>
+            <UpdatePost post={post} handleEditState={handleEditState} handleChange={handleChange} navigate={navigate}/>
         </div>
     }
 }

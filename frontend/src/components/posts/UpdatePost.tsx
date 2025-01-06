@@ -1,7 +1,7 @@
 import { Post, PostData } from "../../interfaces";
 import { useState } from "react";
 
-function UpdatePost({post, handleEditState, handleChange}: {post: Post | undefined, handleEditState: any, handleChange: any}): JSX.Element {
+function UpdatePost({post, handleEditState, handleChange, navigate}: {post: Post | undefined, handleEditState: any, handleChange: any, navigate: any}): JSX.Element {
     // To return early for empty post
     if (!post) {
         return <div>
@@ -39,7 +39,10 @@ function UpdatePost({post, handleEditState, handleChange}: {post: Post | undefin
                 body: JSON.stringify(postData)
             })
 
-            if (!response.ok) {
+            if (response.status === 401) {
+                alert("You must log in first")
+                navigate("/login")
+            } else if (!response.ok) {
                 alert("Failed to update post");
             } else {
                 handleChange(topic, content);

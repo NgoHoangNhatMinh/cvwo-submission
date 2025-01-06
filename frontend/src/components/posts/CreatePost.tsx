@@ -30,8 +30,8 @@ function CreatePost(): JSX.Element {
             body: JSON.stringify(postData)
         })
 
-        if (response.status=== 401) {
-            alert("Error 401")
+        if (response.status === 401) {
+            alert("You must log in first")
             navigate("/login")
         } else if (response.ok) {
             const data = await response.json();
