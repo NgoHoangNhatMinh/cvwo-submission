@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
-import { Post } from '../interfaces';
+import { Post } from '../../interfaces';
 import '../styles/IndexPosts.css'
 
 function IndexPosts(): JSX.Element {

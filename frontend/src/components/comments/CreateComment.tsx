@@ -1,4 +1,4 @@
-import { CommentData } from "../interfaces";
+import { CommentData } from "../../interfaces";
 import { useState } from "react";
 import "../styles/Comment.css"
 

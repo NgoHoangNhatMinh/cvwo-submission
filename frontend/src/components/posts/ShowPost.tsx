@@ -3,9 +3,9 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import DestroyPost from './DestroyPost';
 import UpdatePost from './UpdatePost';
-import { Post } from '../interfaces';
-import IndexComments from './IndexComments';
-import CreateComment from './CreateComment';
+import { Post } from '../../interfaces';
+import IndexComments from '../comments/IndexComments';
+import CreateComment from '../comments/CreateComment';
 import "../styles/ShowPost.css"
 
 function ShowPost(): JSX.Element | undefined {

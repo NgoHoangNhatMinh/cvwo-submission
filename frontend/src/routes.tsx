@@ -1,8 +1,8 @@
 import App from "./App";
-import ShowPost from "./components/ShowPost";
-import CreatePost from "./components/CreatePost";
-import IndexPosts from "./components/IndexPosts";
-import Login from "./components/Login";
+import ShowPost from "./components/posts/ShowPost";
+import CreatePost from "./components/posts/CreatePost";
+import IndexPosts from "./components/posts/IndexPosts";
+import Login from "./components/authorization/Login";
 
 const routes = [
   {

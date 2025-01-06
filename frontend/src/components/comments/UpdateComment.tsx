@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Comment, CommentData } from "../interfaces";
+import { Comment, CommentData } from "../../interfaces";
 
 function UpdateComment({comment, handleEditState, handleChange}: {comment: Comment, handleEditState: any, handleChange: any}) {
     const API_URL: string | undefined = import.meta.env.VITE_API_URL;

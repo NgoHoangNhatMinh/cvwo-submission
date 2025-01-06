@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { PostData } from "../interfaces";
+import { PostData } from "../../interfaces";
 import "../styles/CreatePost.css"
 
 function CreatePost(): JSX.Element {

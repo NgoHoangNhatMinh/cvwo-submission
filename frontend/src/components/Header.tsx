@@ -1,7 +1,7 @@
 import "../styles/Layout.css"
 import { Link, useNavigate } from "react-router-dom";
-import Logout from "./Logout";
-import { useAuth } from "./AuthContex";
+import Logout from "./authorization/Logout";
+import { useAuth } from "./authorization/AuthContex";
 
 function Header() {
     const {loggedIn, setLoggedIn} = useAuth();

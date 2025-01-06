@@ -1,4 +1,4 @@
-import { Comment } from "../interfaces";
+import { Comment } from "../../interfaces";
 
 async function DestroyComment(comment: Comment | undefined): Promise<boolean> {
     // Return early for empty comment

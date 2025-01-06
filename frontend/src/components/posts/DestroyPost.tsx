@@ -1,4 +1,4 @@
-import { Post } from "../interfaces";
+import { Post } from "../../interfaces";
 
 async function DestroyPost(post: Post | undefined): Promise<boolean> {
     // Return early for empty post

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Comment } from '../interfaces';
+import { Comment } from '../../interfaces';
 import DestroyComment from './DestroyComment';
 import UpdateComment from './UpdateComment';
 import CreateComment from './CreateComment';

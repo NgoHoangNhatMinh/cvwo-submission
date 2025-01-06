@@ -1,4 +1,4 @@
-import { Post, PostData } from "../interfaces";
+import { Post, PostData } from "../../interfaces";
 import { useState } from "react";
 
 function UpdatePost({post, handleEditState, handleChange}: {post: Post | undefined, handleEditState: any, handleChange: any}): JSX.Element {
