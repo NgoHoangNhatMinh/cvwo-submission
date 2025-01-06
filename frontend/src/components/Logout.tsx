@@ -1,6 +1,6 @@
-function handleLogout() {
+function Logout() {
     localStorage.removeItem('auth_token');
     alert("Log out successfully")
 }
 
-export default handleLogout
+export default Logout

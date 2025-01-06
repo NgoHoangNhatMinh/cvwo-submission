@@ -1,9 +1,12 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { useAuth } from "./AuthContex";
 
 function Login() {
+    const {setLoggedIn} = useAuth();
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
+    const navigate = useNavigate();
 
     async function handleLogin(event: any) {
         event.preventDefault();
@@ -16,10 +19,10 @@ function Login() {
             alert("Log in successfully")
             const token = response.headers.get("Authorization") + "";
             localStorage.setItem('auth_token', token);
-        //   navigate("/")
+            navigate("/")
+            setLoggedIn(true);
         } else {
             alert("No such user")
-          // Handle errors
         }
     };
 

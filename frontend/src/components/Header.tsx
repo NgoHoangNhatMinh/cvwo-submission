@@ -1,15 +1,41 @@
 import "../styles/Layout.css"
-import { Link } from "react-router-dom";
-import handleLogout from "./Signout";
+import { Link, useNavigate } from "react-router-dom";
+import Logout from "./Logout";
+import { useAuth } from "./AuthContex";
 
 function Header() {
+    const {loggedIn, setLoggedIn} = useAuth();
+    const navigate = useNavigate();
+
+    function handleLogout() {
+        setLoggedIn(false);
+        Logout();
+    }
+
+    function handleLogin() {
+        navigate("/login");
+    }
+
+    function handleCreate() {
+        navigate("/posts/new")
+    }
+
+    function handleProfile() {
+
+    }
+
     return <div className="HeaderContainer">
         <Link to="/" className="Logo">Logo</Link>
         <div className="Options">
-            <button onClick={handleLogout}>Log out</button>
-            <Link to="/login" className="LoginOption">Log In</Link>
-            <Link to="/posts/new" className="CreateOption">+ Create</Link>
-            <p>Profile</p>
+            {loggedIn 
+                ? <>
+                    <button onClick={handleLogout}>Log out</button>
+                    <button onClick={handleCreate}>Create</button>
+                    <button onClick={handleProfile}>Profile</button>
+                </> 
+                // : <Link to="/login" className="LoginOption">Log In</Link>
+                : <button onClick={handleLogin}>Log in</button>
+            }
         </div>
     </div>
 }
