@@ -1,5 +1,10 @@
+import { useEffect } from "react";
+import { useUser } from "../contexts/UserContext";
+
 function Logout() {
-    localStorage.removeItem('auth_token');
+    const { setUser } = useUser();
+
+    localStorage.removeItem("auth_token");
     alert("Log out successfully")
 }
 

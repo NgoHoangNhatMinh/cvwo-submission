@@ -4,6 +4,7 @@ import CreatePost from "./components/posts/CreatePost";
 import IndexPosts from "./components/posts/IndexPosts";
 import Login from "./components/authorization/Login";
 import Signup from "./components/authorization/Signup";
+import Profile from "./components/Profile";
 
 const routes = [
   {
@@ -29,7 +30,11 @@ const routes = [
       {
         path: "signup",
         element: <Signup />,
-      }
+      },
+      {
+        path: "user",
+        element: <Profile />,
+      },
     ]
   }
 ];

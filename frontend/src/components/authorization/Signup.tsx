@@ -1,9 +1,11 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { useAuth } from "./AuthContex";
+import { useAuth } from "../contexts/AuthContex";
+import { useUser } from "../contexts/UserContext";
 
 function Signup() {
     const {setLoggedIn} = useAuth();
+    const {setUser} = useUser();
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
     const navigate = useNavigate();
@@ -16,10 +18,12 @@ function Signup() {
           body: JSON.stringify({ user: { email, password } }),
         });
         if (response.ok) {
-            alert("Sign up successfully")
+            const data = await response.json()
             const token = response.headers.get("Authorization") + "";
             localStorage.setItem('auth_token', token);
             setLoggedIn(true);
+            setUser(data.data);
+            alert("Sign up successfully")
             navigate("/")
         } else {
             alert("No such user")

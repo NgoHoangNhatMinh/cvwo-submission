@@ -1,7 +1,6 @@
 import "../styles/Layout.css"
 import { Link, useNavigate } from "react-router-dom";
-import Logout from "./authorization/Logout";
-import { useAuth } from "./authorization/AuthContex";
+import { useAuth } from "./contexts/AuthContex";
 import { useEffect } from "react";
 
 function Header() {
@@ -10,7 +9,9 @@ function Header() {
 
     function handleLogout() {
         setLoggedIn(false);
-        Logout();
+        localStorage.removeItem("auth_token");
+        alert("Logged out successfully");
+        // navigate("/login"); // Redirect to login after logout
     }
 
     function handleLogin() {
@@ -26,7 +27,7 @@ function Header() {
     }
 
     function handleProfile() {
-
+        navigate('/user')
     }
 
     useEffect(() => {

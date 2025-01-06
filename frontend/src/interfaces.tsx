@@ -47,3 +47,9 @@ export interface CategoryData {
         description: string;
     }
 }
+
+export interface User {
+    id: number;
+    email: string;
+    created_at: string;
+}
