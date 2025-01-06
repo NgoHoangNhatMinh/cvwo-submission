@@ -6,6 +6,7 @@ import UpdatePost from './UpdatePost';
 import { Post } from '../../interfaces';
 import IndexComments from '../comments/IndexComments';
 import "../../styles/ShowPost.css"
+import { useUser } from '../contexts/UserContext';
 
 function ShowPost(): JSX.Element | undefined {
     // Show may return undefined as user may navigate to a different page after deleting the current post for instance
@@ -17,6 +18,7 @@ function ShowPost(): JSX.Element | undefined {
     const [loading, setLoading] = useState<Boolean>(true);
     const [error, setError] = useState<String>("");
     const [edit, setEdit] = useState<boolean>(false);
+    const {user} = useUser();
 
     async function handleDelete() {
         // Request DELETE current post to the server
@@ -83,8 +85,13 @@ function ShowPost(): JSX.Element | undefined {
                 <div className="PostContainer">
                     <h1>{post.topic}</h1>
                     <h2>{post.content}</h2>
-                    <button onClick={handleEditState}>Edit post</button>
-                    <button onClick={handleDelete}>Delete post</button>
+                    {user !== undefined && user.id === post.user_id 
+                        ?  <>
+                            <button onClick={handleEditState}>Edit post</button>
+                            <button onClick={handleDelete}>Delete post</button>
+                        </>
+                        : <div></div>
+                    }
                 </div>
                 
                 <IndexComments post_id={post.id}/>

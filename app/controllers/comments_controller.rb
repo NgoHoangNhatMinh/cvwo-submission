@@ -32,16 +32,24 @@ class CommentsController < ApplicationController
 
   # PATCH/PUT /comments/1
   def update
-    if @comment.update(comment_params)
-      render json: @comment
+    if @comment.user_id == current_user.id
+      if @comment.update(comment_params)
+        render json: @comment
+      else
+        render json: @comment.errors, status: :unprocessable_entity
+      end
     else
-      render json: @comment.errors, status: :unprocessable_entity
+      render json: {error: "You are not authorized to perform this action"}, status: :forbidden
     end
   end
 
   # DELETE /comments/1
   def destroy
-    @comment.destroy!
+    if @comment.user_id == current_user.id
+      @comment.destroy!
+    else
+      render json: {error: "You are not authorized to perform this action"}, status: :forbidden
+    end
   end
 
   private

@@ -5,6 +5,7 @@ import UpdateComment from './UpdateComment';
 import CreateComment from './CreateComment';
 import "../../styles/Comment.css"
 import { useNavigate } from 'react-router-dom';
+import { useUser } from '../contexts/UserContext';
 
 function IndexComments({post_id}: {post_id: number}): JSX.Element {
     const API_URL: string | undefined = import.meta.env.VITE_API_URL;
@@ -13,6 +14,7 @@ function IndexComments({post_id}: {post_id: number}): JSX.Element {
     const [error, setError] = useState<string>("");
     const [edit, setEdit] = useState<Record<number,boolean>>({});
     const navigate = useNavigate();
+    const {user} = useUser();
 
     async function handleDelete(comment: Comment) {
         // Request DELETE current post to the server
@@ -88,8 +90,14 @@ function IndexComments({post_id}: {post_id: number}): JSX.Element {
                         if (!edit[comment.id]) {
                             return <div>
                                 <p>{comment.content}</p>
-                                <button onClick={() => handleEdit(comment)}>Edit</button>
-                                <button onClick={() => handleDelete(comment)}>Delete comment</button>
+                                {
+                                    user !== undefined && comment.user_id === user.id
+                                        ? <>
+                                            <button onClick={() => handleEdit(comment)}>Edit</button>
+                                            <button onClick={() => handleDelete(comment)}>Delete comment</button>
+                                        </>
+                                        : <></>
+                                }
                             </div>
                         } else {
                             return <div>

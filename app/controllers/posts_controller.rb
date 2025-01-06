@@ -1,6 +1,8 @@
 class PostsController < ApplicationController
   before_action :set_post, only: %i[ show update destroy ]
   before_action :authenticate_user!, only: [:create, :update, :destroy]
+  # cannot use find authorize_user function for some reason??
+  # before_action :authorize_user!, only: [:update, :destroy]
 
   # GET /posts
   def index
@@ -29,16 +31,24 @@ class PostsController < ApplicationController
 
   # PATCH/PUT /posts/1
   def update
-    if @post.update(post_params)
-      render json: @post
+    if @post.user_id == current_user.id
+      if @post.update(post_params)
+        render json: @post
+      else
+        render json: @post.errors, status: :unprocessable_entity
+      end
     else
-      render json: @post.errors, status: :unprocessable_entity
+      render json: {error: "You are not authorized to perform this action"}, status: :forbidden
     end
   end
 
   # DELETE /posts/1
   def destroy
-    @post.destroy!
+    if @post.user_id == current_user.id
+      @post.destroy!
+    else
+      render json: {error: "You are not authorized to perform this action"}, status: :forbidden
+    end
   end
 
   private
@@ -51,4 +61,7 @@ class PostsController < ApplicationController
     def post_params
       params.expect(post: [ :topic, :content, :user_id, :category_id ])
     end
+
+    # def authorize_user
+    # end
 end
