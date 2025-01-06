@@ -5,8 +5,7 @@ import DestroyPost from './DestroyPost';
 import UpdatePost from './UpdatePost';
 import { Post } from '../../interfaces';
 import IndexComments from '../comments/IndexComments';
-import CreateComment from '../comments/CreateComment';
-import "../styles/ShowPost.css"
+import "../../styles/ShowPost.css"
 
 function ShowPost(): JSX.Element | undefined {
     // Show may return undefined as user may navigate to a different page after deleting the current post for instance

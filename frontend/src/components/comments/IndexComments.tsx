@@ -3,7 +3,7 @@ import { Comment } from '../../interfaces';
 import DestroyComment from './DestroyComment';
 import UpdateComment from './UpdateComment';
 import CreateComment from './CreateComment';
-import "../styles/Comment.css"
+import "../../styles/Comment.css"
 
 function IndexComments({post_id}: {post_id: number}): JSX.Element {
     const API_URL: string | undefined = import.meta.env.VITE_API_URL;

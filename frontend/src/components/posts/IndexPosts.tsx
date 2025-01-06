@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { Post } from '../../interfaces';
-import '../styles/IndexPosts.css'
+import '../../styles/IndexPosts.css'
 
 function IndexPosts(): JSX.Element {
     const API_URL: string | undefined = import.meta.env.VITE_API_URL;
