@@ -1,5 +1,5 @@
 import "../styles/Layout.css"
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { useAuth } from "./contexts/AuthContex";
 import { useEffect, useState } from "react";
 import { useUser } from "./contexts/UserContext";
@@ -10,6 +10,7 @@ function Header() {
     const API_URL: string | undefined = import.meta.env.VITE_API_URL;
     const navigate = useNavigate();
     const [search, setSearch] = useState<string>("")
+    const [searchParams, setSearchParams] = useSearchParams();
 
     function handleLogout() {
         setLoggedIn(false);
@@ -36,7 +37,11 @@ function Header() {
 
     function handleSearch(event: any) {
         event.preventDefault()
-        navigate(`/?q=${search}`)
+
+        const newParams = new URLSearchParams(searchParams); // Clone existing params
+        newParams.set("q", search); // Add or update the "q" parameter
+        setSearchParams(newParams); // Update the URL with the new parameters
+
         setSearch("");
     }
 

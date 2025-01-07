@@ -15,6 +15,18 @@ function IndexPosts(): JSX.Element {
         navigate(`/posts/${id}`);
     }
 
+    function sortByRating() {
+        const newParams = new URLSearchParams(searchParams); // Clone existing params
+        newParams.set("sort", "rate"); // Add or update the "sort" parameter
+        setSearchParams(newParams); // Update the URL with the new parameters
+    }
+
+    function sortByTime() {
+        const newParams = new URLSearchParams(searchParams); // Clone existing params
+        newParams.set("sort", "time"); // Add or update the "sort" parameter
+        setSearchParams(newParams); // Update the URL with the new parameters
+    }
+
     // fetch posts data on mount
     useEffect(() => {
         fetch(`${API_URL}/posts/?${searchParams}`)
@@ -48,6 +60,8 @@ function IndexPosts(): JSX.Element {
     return (
         <div className="PostsContainer">
             <h1>Posts</h1>
+            <button onClick={sortByRating}>by rating</button>
+            <button onClick={sortByTime}>by time</button>
             {
                 firstTenPosts.map((post) => {
                     return <div onClick={() => navigateToPost(post.id)} className="Post" key={post.id}>
