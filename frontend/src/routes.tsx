@@ -4,7 +4,9 @@ import CreatePost from "./components/posts/CreatePost";
 import IndexPosts from "./components/posts/IndexPosts";
 import Login from "./components/authorization/Login";
 import Signup from "./components/authorization/Signup";
-import Profile from "./components/Profile";
+import Profile from "./components/profile/Profile";
+import UserPosts from "./components/profile/UserPosts";
+import UserComments from "./components/profile/UserComments";
 
 const routes = [
   {
@@ -34,6 +36,16 @@ const routes = [
       {
         path: "user",
         element: <Profile />,
+        children: [
+          {
+            path: "posts",
+            element: <UserPosts />
+          },
+          {
+            path: "comments",
+            element: <UserComments />
+          }
+        ]
       },
     ]
   }
