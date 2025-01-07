@@ -67,6 +67,7 @@ function IndexPosts(): JSX.Element {
                     return <div onClick={() => navigateToPost(post.id)} className="Post" key={post.id}>
                         <h2>{"Post " + post.id + " - " + post.topic}</h2>
                         <p>{post.content}</p>
+                        <p>{"Category: " + post.category_id}</p>
                     </div>
                 })
             }
