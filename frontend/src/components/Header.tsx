@@ -37,6 +37,7 @@ function Header() {
     function handleSearch(event: any) {
         event.preventDefault()
         navigate(`/?q=${search}`)
+        setSearch("");
     }
 
     useEffect(() => {
