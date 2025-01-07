@@ -19,12 +19,13 @@
    $ bundle install
    ```
    ```console
+   $ cd frontend
    $ npm install
    ```
 
 4. Setup the database:
    ```console
-   $ rails db:create
+   $ rails credentials:edit
    $ rails db:migrate
    $ rails db:seed
    ```
