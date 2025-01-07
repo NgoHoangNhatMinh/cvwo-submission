@@ -6,18 +6,21 @@ class PostsController < ApplicationController
 
   # GET /posts
   def index
+    @posts = Post.all
+
+    if params[:category_id].present?
+      @posts = @posts.where(category_id: params[:category_id])
+    end
+
+    if params[:q].present?
+      @posts = Post.where("content LIKE ?", "%#{params[:q]}%")
+    end
+
     if params[:sort].present? && params[:sort] == "rate"
-      if params[:q].present?
-        @posts = Post.where("content LIKE ?", "%#{params[:q]}%")#.order(created_at: :desc)
-      else
-        @posts = Post.all#.order(created_at: :desc)
-      end
+      @posts = @posts
     else
-      if params[:q].present?
-        @posts = Post.where("content LIKE ?", "%#{params[:q]}%").order(created_at: :desc)
-      else
-        @posts = Post.all.order(created_at: :desc)
-      end
+      # Default ordering by creation date (newest first)
+      @posts = @posts.order(created_at: :desc)
     end
 
     render json: @posts

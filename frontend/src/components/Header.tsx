@@ -3,6 +3,7 @@ import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { useAuth } from "./contexts/AuthContex";
 import { useEffect, useState } from "react";
 import { useUser } from "./contexts/UserContext";
+import { Category } from "../interfaces";
 
 function Header() {
     const {loggedIn, setLoggedIn} = useAuth();
@@ -11,6 +12,8 @@ function Header() {
     const navigate = useNavigate();
     const [search, setSearch] = useState<string>("")
     const [searchParams, setSearchParams] = useSearchParams();
+    const [categories, setCategories] = useState<Category[]>([]);
+    const [categoryID, setCategoryID] = useState<number | undefined>();
 
     function handleLogout() {
         setLoggedIn(false);
@@ -40,6 +43,7 @@ function Header() {
 
         const newParams = new URLSearchParams(searchParams); // Clone existing params
         newParams.set("q", search); // Add or update the "q" parameter
+        newParams.set("category_id", String(categoryID))
         setSearchParams(newParams); // Update the URL with the new parameters
 
         setSearch("");
@@ -62,6 +66,12 @@ function Header() {
         }
     }, [])
 
+    useEffect(() => {
+        fetch(`${API_URL}/categories`)
+            .then(response => response.json())
+            .then(data => {setCategories(data)})
+    }, [])
+
     return <div className="HeaderContainer">
         <Link to="/" className="Logo">Logo</Link>
         <form onSubmit={handleSearch}>
@@ -70,8 +80,11 @@ function Header() {
                 value={search}
                 placeholder="Search Forum"
                 onChange={e => setSearch(e.target.value)}
-                required
             />
+            <select name="categories" id="categories" onChange={e => setCategoryID(Number(e.target.value))}>
+                    {categories.map((category => <option value={category.id} key={category.id}>{category.name}</option>))}
+            </select>
+            <button type="submit">Search</button>
         </form>
         <div className="Options">
             {loggedIn 
