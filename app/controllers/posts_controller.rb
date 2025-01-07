@@ -11,6 +11,15 @@ class PostsController < ApplicationController
     render json: @posts
   end
 
+  # GET /user/:user_id/posts
+  # Fetch all the posts of a specific user
+  def user_posts
+    @user = User.find(params[:user_id])
+    @posts = @user.posts.order(created_at: :desc)
+    
+    render json: @posts
+  end
+
   # GET /posts/1
   def show
     render json: @post

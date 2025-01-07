@@ -14,6 +14,15 @@ class CommentsController < ApplicationController
     render json: @comments
   end
 
+  # GET /user/:user_id/comments
+  # Fetch all the comments of a specific user
+  def user_comments
+    @user = User.find(params[:user_id])
+    @comments = @user.comments.order(created_at: :desc)
+    
+    render json: @comments
+  end
+
   # GET /comments/1
   def show
     render json: @comment

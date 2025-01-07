@@ -4,6 +4,7 @@ class User < ApplicationRecord
   include Devise::JWT::RevocationStrategies::JTIMatcher
 
   has_many :posts
+  has_many :comments
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,
