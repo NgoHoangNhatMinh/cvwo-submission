@@ -11,22 +11,32 @@
 Category.destroy_all
 
 5.times do |i|
-    Category.create(
+    Category.create!(
         id: i + 1,
         name: Faker::Lorem.sentence(word_count: 1),
         description: Faker::Lorem.paragraph(sentence_count: 1)
     )
 end
 
+User.destroy_all
+
+5.times do |i|
+    User.create!(
+        id: i + 1,
+        email: "test" + i.to_s + "@example.com",
+        password: "password"
+    )
+end
+
 Post.destroy_all
 
 20.times do |i|
-    Post.create(
+    Post.create!(
         id: i + 1,
         topic: Faker::Lorem.sentence(word_count: 3),
         content: Faker::Lorem.paragraph(sentence_count: 3),
         # Arbitrary numbers --> id starts from 1
-        user_id: i % 10 + 1,
+        user_id: i % 5 + 1,
         category_id: i %  5 + 1
     )
 end
@@ -35,11 +45,11 @@ end
 Comment.destroy_all
 
 60.times do |i|
-    Comment.create(
+    Comment.create!(
         id: i + 1,
         content: Faker::Lorem.paragraph(sentence_count: 3),
         # Arbitrary numbers --> id starts from 1
-        user_id: i % 10 + 1,
+        user_id: i % 5 + 1,
         post_id: i % 20 + 1
     )
 end
