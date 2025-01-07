@@ -17,33 +17,18 @@ function IndexPosts(): JSX.Element {
 
     // fetch posts data on mount
     useEffect(() => {
-        if (!searchParams) {
-            fetch(`${API_URL}/posts`)
-            .then(response => {
-                if (!response.ok)
-                    throw new Error('Network response was not ok');
-                return response.json();
-            })
-            .then(data => {
-                setPosts(data);
-                setLoading(false);
-            })
-            .catch(error => setError(error.message))
-        } else {
-            fetch(`${API_URL}/posts/?${searchParams}`)
-            .then(response => {
-                if (!response.ok)
-                    throw new Error('Network response was not ok');
-                return response.json();
-            })
-            .then(data => {
-                setPosts(data);
-                setLoading(false);
-            })
-            .catch(error => setError(error.message))
-        }
-
-    }, [posts]);
+        fetch(`${API_URL}/posts/?${searchParams}`)
+        .then(response => {
+            if (!response.ok)
+                throw new Error('Network response was not ok');
+            return response.json();
+        })
+        .then(data => {
+            setPosts(data);
+            setLoading(false);
+        })
+        .catch(error => setError(error.message))
+    }, [searchParams]);
 
     if (error) {
         return <div>{error}</div>;
