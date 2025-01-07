@@ -6,7 +6,11 @@ class PostsController < ApplicationController
 
   # GET /posts
   def index
-    @posts = Post.all.order(created_at: :desc)
+    if params[:q].present?
+      @posts = Post.where("content LIKE ?", "%#{params[:q]}%")
+    else
+      @posts = Post.all.order(created_at: :desc)
+    end
 
     render json: @posts
   end

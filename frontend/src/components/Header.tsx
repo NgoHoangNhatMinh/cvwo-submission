@@ -1,7 +1,7 @@
 import "../styles/Layout.css"
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "./contexts/AuthContex";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useUser } from "./contexts/UserContext";
 
 function Header() {
@@ -9,6 +9,7 @@ function Header() {
     const {setUser} = useUser();
     const API_URL: string | undefined = import.meta.env.VITE_API_URL;
     const navigate = useNavigate();
+    const [search, setSearch] = useState<string>("")
 
     function handleLogout() {
         setLoggedIn(false);
@@ -33,6 +34,11 @@ function Header() {
         navigate('/user')
     }
 
+    function handleSearch(event: any) {
+        event.preventDefault()
+        navigate(`/?q=${search}`)
+    }
+
     useEffect(() => {
         const token = localStorage.getItem('auth_token');
         if (token === null) {
@@ -52,6 +58,15 @@ function Header() {
 
     return <div className="HeaderContainer">
         <Link to="/" className="Logo">Logo</Link>
+        <form onSubmit={handleSearch}>
+            <input 
+                type="text" 
+                value={search}
+                placeholder="Search Forum"
+                onChange={e => setSearch(e.target.value)}
+                required
+            />
+        </form>
         <div className="Options">
             {loggedIn 
                 ? <>

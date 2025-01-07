@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Post } from '../../interfaces';
 import '../../styles/IndexPosts.css'
 
@@ -9,6 +9,7 @@ function IndexPosts(): JSX.Element {
     const [posts, setPosts] = useState<Post[]>([]);
     const [loading, setLoading] = useState<Boolean>(true);
     const [error, setError] = useState<string>("");
+    const [searchParams, setSearchParams] = useSearchParams();
 
     function navigateToPost(id: number) {
         navigate(`/posts/${id}`);
@@ -16,7 +17,8 @@ function IndexPosts(): JSX.Element {
 
     // fetch posts data on mount
     useEffect(() => {
-        fetch(`${API_URL}/posts`)
+        if (!searchParams) {
+            fetch(`${API_URL}/posts`)
             .then(response => {
                 if (!response.ok)
                     throw new Error('Network response was not ok');
@@ -27,7 +29,21 @@ function IndexPosts(): JSX.Element {
                 setLoading(false);
             })
             .catch(error => setError(error.message))
-    }, []);
+        } else {
+            fetch(`${API_URL}/posts/?${searchParams}`)
+            .then(response => {
+                if (!response.ok)
+                    throw new Error('Network response was not ok');
+                return response.json();
+            })
+            .then(data => {
+                setPosts(data);
+                setLoading(false);
+            })
+            .catch(error => setError(error.message))
+        }
+
+    }, [posts]);
 
     if (error) {
         return <div>{error}</div>;
@@ -49,7 +65,7 @@ function IndexPosts(): JSX.Element {
             <h1>Posts</h1>
             {
                 firstTenPosts.map((post) => {
-                    return <div onClick={() => navigateToPost(post.id)} className="Post">
+                    return <div onClick={() => navigateToPost(post.id)} className="Post" key={post.id}>
                         <h2>{"Post " + post.id + " - " + post.topic}</h2>
                         <p>{post.content}</p>
                     </div>
