@@ -88,7 +88,7 @@ function IndexComments({post_id}: {post_id: number}): JSX.Element {
                 {
                     firstTenComments.map((comment) => {
                         if (!edit[comment.id]) {
-                            return <div>
+                            return <div key={comment.id}>
                                 <p>{comment.content}</p>
                                 {
                                     user !== undefined && comment.user_id === user.id
