@@ -61,7 +61,15 @@ function Header() {
                     "Authorization": `${token}`
                 }
             })
-                .then(response => response.json())
+                .then(response => {
+                    if (response.status === 401) {
+                        setLoggedIn(false);
+                        localStorage.removeItem('auth_token');
+                        return undefined;
+                    } else {
+                        return response.json()
+                    }
+                })
                 .then(data => setUser(data))
         }
     }, [])
