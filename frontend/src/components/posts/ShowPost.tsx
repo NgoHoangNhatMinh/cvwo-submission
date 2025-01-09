@@ -82,20 +82,21 @@ function ShowPost(): JSX.Element | undefined {
         // Read mode
         return (
             <div>
-                <div className="PostContainer">
-                    <h1>{post.topic}</h1>
-                    <h2>{post.content}</h2>
+                <div className="ShowPostContainer">
+                    <div className="PostContent">
+                        <h1>{post.topic}</h1>
+                        <p>{post.content}</p>
+                    </div>
                     {user !== undefined && user.id === post.user_id 
-                        ?  <>
-                            <button onClick={handleEditState}>Edit post</button>
-                            <button onClick={handleDelete}>Delete post</button>
-                        </>
+                        ?   <div className="PostOptions">
+                                <button onClick={handleEditState}>Edit</button>
+                                <button onClick={handleDelete}>Delete</button>
+                            </div>
                         : <div></div>
                     }
                 </div>
                 
                 <IndexComments post_id={post.id}/>
-                <Link to="/">Go back</Link>
             </div>
         )
     } else if (edit) {

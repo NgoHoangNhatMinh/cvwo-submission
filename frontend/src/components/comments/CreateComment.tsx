@@ -1,6 +1,7 @@
 import { CommentData } from "../../interfaces";
 import { useState } from "react";
 import "../../styles/Comment.css"
+import { Button, FormControl, InputLabel, TextField } from "@mui/material";
 
 function CreateComment({post_id, handleNew, navigate}: {post_id: number, handleNew: any, navigate: any}): JSX.Element {
     const API_URL: string | undefined = import.meta.env.VITE_API_URL;
@@ -45,18 +46,30 @@ function CreateComment({post_id, handleNew, navigate}: {post_id: number, handleN
 
     return (
         <div className="AddComment">
-            <p>Add comment</p>
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <input 
-                        type="textbox"
-                        value={content}
-                        onChange={e => setContent(e.target.value)}
-                        required 
-                    />
-                </div>
-                <button type="submit">Submit</button>
-            </form>
+            <FormControl
+                className="FormControl"
+                component="form" // Ensures this acts as a form element
+                onSubmit={handleSubmit}
+                sx={{
+                    m: 1,
+                    minWidth: 200,
+                    display: "flex",
+                    flexDirection: "row",
+                    gap: 2,
+                    alignItems: "center",
+                }
+            }
+            >
+                <TextField
+                    className="TextField"
+                    id="addcommentbox"
+                    label="Add Comment"
+                    variant="outlined"
+                    value={content}
+                    onChange={(e) => setContent(e.target.value)}
+                />
+                <Button type="submit" variant="contained">Comment</Button>
+            </FormControl>
         </div>
     )
 }

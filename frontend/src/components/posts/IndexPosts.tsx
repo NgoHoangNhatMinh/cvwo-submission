@@ -54,9 +54,10 @@ function IndexPosts(): JSX.Element {
 
     return (
         <div className="PostsContainer">
-            <FormControl sx={{ m: 1, minWidth: 200 }}>
+            <FormControl className='FormControlSelect' sx={{ m: 1, minWidth: 200 }}>
                 <InputLabel id="sort-select-label">Sort By</InputLabel>
                 <Select
+                    className="Select"
                     labelId="sort-select-label"
                     id="sort-select"
                     onChange={handleSort}

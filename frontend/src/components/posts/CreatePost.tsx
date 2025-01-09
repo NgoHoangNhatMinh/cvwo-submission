@@ -2,6 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Category, PostData } from "../../interfaces";
 import "../../styles/CreatePost.css"
+import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 
 function CreatePost(): JSX.Element {
     const API_URL: string | undefined = import.meta.env.VITE_API_URL;
@@ -55,26 +56,31 @@ function CreatePost(): JSX.Element {
     }, [])
 
     return (
-        <div className="CreatePost">
+        <div className="CreatePostContainer">
             <h1>Create new post</h1>
-            <Link to="/">Go back</Link>
             <form onSubmit={handleSubmit}>
-                <select name="categories" id="categories" onChange={e => setCategoryID(Number(e.target.value))}>
+                {/* <select name="categories" id="categories" onChange={e => setCategoryID(Number(e.target.value))}>
                     {categories.map((category => <option value={category.id} key={category.id}>{category.name}</option>))}
-                </select>
+                </select> */}
+                <FormControl sx={{ minWidth: 200, marginBottom: 2 }}>
+                    <InputLabel>Category</InputLabel>
+                    <Select onChange={e => setCategoryID(Number(e.target.value))}>
+                        {categories.map((category => <MenuItem value={category.id} key={category.id}>{category.name}</MenuItem>))}
+                    </Select>
+                </FormControl>
                 <div>
-                    <label >Topic: </label>
                     <input 
                         type="text"
+                        placeholder="Topic"
                         value={topic}
                         onChange={e => setTopic(e.target.value)}
                         required 
                     />
                 </div>
                 <div>
-                    <label >Content: </label>
                     <input 
                         type="text"
+                        placeholder="Content"
                         value={content}
                         onChange={e => setContent(e.target.value)}
                         required 

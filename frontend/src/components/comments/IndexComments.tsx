@@ -83,19 +83,20 @@ function IndexComments({post_id}: {post_id: number}): JSX.Element {
     return (
         <div className="CommentsContainer">
             <CreateComment post_id={post_id} handleNew={handleNew} navigate={navigate}/>
-            <div className="Comments">
-                <h3>Comments:</h3>
+            <div className="IndexComments">
+                <h4>Comments</h4>
                 {
                     firstTenComments.map((comment) => {
                         if (!edit[comment.id]) {
-                            return <div key={comment.id}>
+                            return <div key={comment.id} className='Comment'>
+                                <p className='CommentUser'>{"User " + comment.user_id}</p>
                                 <p>{comment.content}</p>
                                 {
                                     user !== undefined && comment.user_id === user.id
-                                        ? <>
-                                            <button onClick={() => handleEdit(comment)}>Edit</button>
-                                            <button onClick={() => handleDelete(comment)}>Delete comment</button>
-                                        </>
+                                        ?   <div className="CommentOptions">
+                                                <button onClick={() => handleEdit(comment)}>Edit</button>
+                                                <button onClick={() => handleDelete(comment)}>Delete</button>
+                                            </div>
                                         : <></>
                                 }
                             </div>
