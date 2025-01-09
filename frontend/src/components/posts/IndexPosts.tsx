@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Post } from '../../interfaces';
 import '../../styles/IndexPosts.css'
+import { InputLabel, FormControl, Select, MenuItem } from '@mui/material';
 
 function IndexPosts(): JSX.Element {
     const API_URL: string | undefined = import.meta.env.VITE_API_URL;
@@ -53,12 +54,18 @@ function IndexPosts(): JSX.Element {
 
     return (
         <div className="PostsContainer">
-            <div className="SortContainer">
-                <select name="Sorting" id="Sorting" onChange={handleSort}>
-                    <option value="rate">Best</option>
-                    <option value="time">New</option>
-                </select>
-            </div>
+            <FormControl sx={{ m: 1, minWidth: 200 }}>
+                <InputLabel id="sort-select-label">Sort By</InputLabel>
+                <Select
+                    labelId="sort-select-label"
+                    id="sort-select"
+                    onChange={handleSort}
+                    label="Sort By"
+                >
+                    <MenuItem value="time">By Time</MenuItem>
+                    <MenuItem value="rate">By Rating</MenuItem>
+                </Select>
+            </FormControl>
             {
                 firstTenPosts.map((post) => {
                     let postDate = new Date(post.created_at);

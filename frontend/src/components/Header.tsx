@@ -1,14 +1,17 @@
-import "../styles/Layout.css"
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
-import { useAuth } from "./contexts/AuthContex";
+import { useAuth } from "./contexts/AuthContext";
 import { useEffect, useState } from "react";
 import { useUser } from "./contexts/UserContext";
 import { Category } from "../interfaces";
 import Logo from '../assets/react.svg'
+import { Button, FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material";
+import { useTheme } from "./contexts/ThemeContext";
+import { ClassNames } from "@emotion/react";
 
 function Header() {
     const {loggedIn, setLoggedIn} = useAuth();
     const {setUser} = useUser();
+    const {isDarkMode, setIsDarkMode} = useTheme();
     const API_URL: string | undefined = import.meta.env.VITE_API_URL;
     const navigate = useNavigate();
     const [search, setSearch] = useState<string>("")
@@ -34,7 +37,11 @@ function Header() {
     }
 
     function handleProfile() {
-        navigate('/user')
+        navigate('/user');
+    }
+
+    function handleThemeChange() {
+        setIsDarkMode(!isDarkMode);
     }
 
     function handleSearch(event: any) {
@@ -79,28 +86,57 @@ function Header() {
             .then(data => {setCategories(data)})
     }, [])
 
+    useEffect(() => {
+        // Toggle dark/light theme by changing the data-theme attribute
+        document.documentElement.setAttribute('data-theme', isDarkMode ? 'dark' : 'light');
+      }, [isDarkMode]);
+
     return <div className="HeaderContainer">
         <Link to="/" className="Logo"><img src={Logo} alt="" width='30px'/></Link>
-        <form onSubmit={handleSearch}>
-            <input 
-                type="text" 
+        <FormControl
+            className="Form"
+            component="form" // Ensures this acts as a form element
+            onSubmit={handleSearch}
+            sx={{
+                m: 1,
+                minWidth: 200,
+                display: "flex",
+                flexDirection: "row",
+                gap: 2,
+                alignItems: "center",
+            }
+        }
+        >
+            <TextField
+                id="searchbox"
+                label="Search Forum"
+                variant="outlined"
                 value={search}
-                placeholder="Search Forum"
-                onChange={e => setSearch(e.target.value)}
+                onChange={(e) => setSearch(e.target.value)}
             />
-            <select name="categories" id="categories" onChange={e => setCategoryID(Number(e.target.value))}>
-                    {categories.map((category => <option value={category.id} key={category.id}>{category.name}</option>))}
-            </select>
-            <button type="submit">Search</button>
-        </form>
+            <InputLabel id="category-select-label" sx={{ whiteSpace: "nowrap" }}></InputLabel>
+            <Select
+                labelId="category-select-label"
+                id="category-select"
+                value={categoryID}
+                onChange={(e) => setCategoryID(Number(e.target.value))}
+            >
+                {categories.map((category) => (
+                <MenuItem value={category.id} key={category.id}>
+                    {category.name}
+                </MenuItem>
+                ))}
+            </Select>
+            <Button type="submit" variant="contained">Search</Button>
+        </FormControl>
         <div className="Options">
+            <button onClick={handleThemeChange}>{isDarkMode ? "Light Mode" : "Dark Mode"}</button>
             {loggedIn 
                 ? <>
                     <button onClick={handleLogout}>Log out</button>
                     <button onClick={handleCreate}>Create</button>
                     <button onClick={handleProfile}>Profile</button>
                 </> 
-                // : <Link to="/login" className="LoginOption">Log In</Link>
                 : <>
                     <button onClick={handleSignup}>Sign up</button>
                     <button onClick={handleLogin}>Log in</button>

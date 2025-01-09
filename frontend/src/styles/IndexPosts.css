@@ -17,7 +17,7 @@
 
 .Post:hover {
     cursor: pointer;
-    background-color: #262626;
+    background-color: var(--primary-highlight);
 }
 
 .Post p {
