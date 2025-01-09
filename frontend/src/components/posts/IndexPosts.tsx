@@ -15,18 +15,6 @@ function IndexPosts(): JSX.Element {
         navigate(`/posts/${id}`);
     }
 
-    function sortByRating() {
-        const newParams = new URLSearchParams(searchParams); // Clone existing params
-        newParams.set("sort", "rate"); // Add or update the "sort" parameter
-        setSearchParams(newParams); // Update the URL with the new parameters
-    }
-
-    function sortByTime() {
-        const newParams = new URLSearchParams(searchParams); // Clone existing params
-        newParams.set("sort", "time"); // Add or update the "sort" parameter
-        setSearchParams(newParams); // Update the URL with the new parameters
-    }
-
     function handleSort(event: any) {
         const newParams = new URLSearchParams(searchParams); // Clone existing params
         newParams.set("sort", event.target.value); // Add or update the "sort" parameter
@@ -73,10 +61,14 @@ function IndexPosts(): JSX.Element {
             </div>
             {
                 firstTenPosts.map((post) => {
-                    return <div onClick={() => navigateToPost(post.id)} className="Post" key={post.id}>
-                        <h2>{"Post " + post.id + " - " + post.topic}</h2>
-                        <p>{post.content}</p>
-                        <p>{"Category: " + post.category_id}</p>
+                    let postDate = new Date(post.created_at);
+                    return <div className="PostBorder">
+                        <div onClick={() => navigateToPost(post.id)} className="Post" key={post.id}>
+                            <p>{"Category: " + post.category_id}</p>
+                            <h2>{"Post " + post.id + " - " + post.topic}</h2>
+                            <p>{post.content}</p>
+                            <p>{postDate.toLocaleDateString()}</p>
+                        </div>
                     </div>
                 })
             }

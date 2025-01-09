@@ -4,7 +4,7 @@ import { useAuth } from "./contexts/AuthContex";
 import { useEffect, useState } from "react";
 import { useUser } from "./contexts/UserContext";
 import { Category } from "../interfaces";
-import logo from '../assets/logo.webp'
+import Logo from '../assets/react.svg'
 
 function Header() {
     const {loggedIn, setLoggedIn} = useAuth();
@@ -19,8 +19,6 @@ function Header() {
     function handleLogout() {
         setLoggedIn(false);
         localStorage.removeItem("auth_token");
-        alert("Logged out successfully");
-        // navigate("/login"); // Redirect to login after logout
     }
 
     function handleLogin() {
@@ -82,7 +80,7 @@ function Header() {
     }, [])
 
     return <div className="HeaderContainer">
-        <Link to="/" className="Logo"><img src={logo} alt="" width='50px'/></Link>
+        <Link to="/" className="Logo"><img src={Logo} alt="" width='30px'/></Link>
         <form onSubmit={handleSearch}>
             <input 
                 type="text" 

@@ -26,7 +26,6 @@ function Login() {
             localStorage.setItem('user_data', userData)
             setLoggedIn(true);
             setUser(userData);
-            alert("Log in successfully")
             navigate("/")
         } else {
             alert("No such user")
