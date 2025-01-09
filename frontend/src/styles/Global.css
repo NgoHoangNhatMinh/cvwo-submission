@@ -3,22 +3,24 @@
   --primary-main: #ffffff;
   --primary-dark: #000000;
   --primary-text: #000000;
-  --primary-contrast: #ffffff;
+  --primary-contrast: #000000;
   --primary-button: #ffffff;
   --primary-highlight: #eeeeee;
   --secondary-main: #f9f9fb;
-  --secondary-dark: #ffffff;
+  --secondary-dark: #000000;
+  --secondary-text: grey;
 }
 
 [data-theme='dark'] {
   --primary-main: #0e1113;
   --primary-dark: rgba(255, 255, 255, 0.87);
   --primary-text: rgba(255, 255, 255, 0.87);
-  --primary-contrast: #000000;
+  --primary-contrast: #ffffff;
   --primary-button: #1a1a1a;
   --primary-highlight: #262626;
   --secondary-main: #121212;
-  --secondary-dark: #ab47bc;
+  --secondary-dark: #ffffff;
+  --secondary-text: grey;
 }
 
 /* OVERALL STYLING */
@@ -35,7 +37,26 @@
 button {
     background-color: var(--primary-button);
     color: var(--primary-text);
+    border-color: var(--secondary-dark);
 }
+
+.TextField .MuiInputLabel-root{
+    color: var(--secondary-text);
+}
+
+.TextField .MuiOutlinedInput-root{
+    & fieldset {
+        border-color: var(--primary-contrast); /* Default border color */
+    }
+}
+
+.FormControlSelect .MuiInputLabel-root {
+    color: var(--secondary-text);
+  }
+
+.Select .MuiOutlinedInput-notchedOutline {
+    border-color: var(--primary-contrast);
+  }
 
 /* FROM THE TOP DOWN */
 
@@ -46,7 +67,7 @@ button {
     justify-content: space-between;
     padding: 0px 50px 0px;
     border-bottom: 2px solid #202122;
-    height: 3rem;
+    /* height: 3rem; */
 }
 
 .Options {

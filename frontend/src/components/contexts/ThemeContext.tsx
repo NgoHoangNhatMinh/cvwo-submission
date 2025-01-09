@@ -8,7 +8,7 @@ interface ThemeContextProps {
 const ThemeContext = createContext<ThemeContextProps | undefined>(undefined);
 
 export function ThemeProvider({children}: {children: any}) {
-    const [isDarkMode, setIsDarkMode] = useState(true)
+    const [isDarkMode, setIsDarkMode] = useState(false)
 
     return (
         <ThemeContext.Provider value={{isDarkMode, setIsDarkMode}}>

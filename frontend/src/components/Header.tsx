@@ -6,7 +6,6 @@ import { Category } from "../interfaces";
 import Logo from '../assets/react.svg'
 import { Button, FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material";
 import { useTheme } from "./contexts/ThemeContext";
-import { ClassNames } from "@emotion/react";
 
 function Header() {
     const {loggedIn, setLoggedIn} = useAuth();
@@ -41,6 +40,7 @@ function Header() {
     }
 
     function handleThemeChange() {
+        localStorage.setItem('is_dark', String(!isDarkMode));
         setIsDarkMode(!isDarkMode);
     }
 
@@ -78,6 +78,14 @@ function Header() {
                 })
                 .then(data => setUser(data))
         }
+
+        // Set theme
+        const isDark = localStorage.getItem('is_dark');
+        if (isDark === null) {
+            setIsDarkMode(false);
+        } else {
+            setIsDarkMode(isDark === "true");
+        } 
     }, [])
 
     useEffect(() => {
@@ -108,6 +116,7 @@ function Header() {
         }
         >
             <TextField
+                className="TextField"
                 id="searchbox"
                 label="Search Forum"
                 variant="outlined"
@@ -116,6 +125,7 @@ function Header() {
             />
             <InputLabel id="category-select-label" sx={{ whiteSpace: "nowrap" }}></InputLabel>
             <Select
+                className="Select"
                 labelId="category-select-label"
                 id="category-select"
                 value={categoryID}
