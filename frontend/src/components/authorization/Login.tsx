@@ -2,6 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useAuth } from "../contexts/AuthContex";
 import { useUser } from "../contexts/UserContext";
+import "../../styles/Authorization.css"
 
 function Login() {
     const {setLoggedIn} = useAuth();
@@ -32,29 +33,29 @@ function Login() {
         }
     };
 
-    return <div>
-        <h1>Logging in...</h1>
-        <Link to="/">Go back</Link>
+    return <div className="LoginContainer">
+        <h1>Welcome Back</h1>
+        <p>Enter your credentials to access your account</p>
         <form onSubmit={handleLogin}>
                 <div>
-                    <label >Email: </label>
-                    <input 
+                    <input
                         type="text"
+                        placeholder="Enter your email"
                         value={email}
                         onChange={e => setEmail(e.target.value)}
-                        required 
+                        required
                     />
                 </div>
                 <div>
-                    <label >Password: </label>
-                    <input 
+                    <input
                         type="password"
+                        placeholder="Enter your password"
                         value={password}
                         onChange={e => setPassword(e.target.value)}
-                        required 
+                        required
                     />
                 </div>
-                <button type="submit">Submit</button>
+                <button type="submit">Log In</button>
             </form>
     </div>
 }

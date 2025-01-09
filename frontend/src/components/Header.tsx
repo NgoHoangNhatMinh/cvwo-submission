@@ -4,6 +4,7 @@ import { useAuth } from "./contexts/AuthContex";
 import { useEffect, useState } from "react";
 import { useUser } from "./contexts/UserContext";
 import { Category } from "../interfaces";
+import logo from '../assets/logo.webp'
 
 function Header() {
     const {loggedIn, setLoggedIn} = useAuth();
@@ -81,7 +82,7 @@ function Header() {
     }, [])
 
     return <div className="HeaderContainer">
-        <Link to="/" className="Logo">Logo</Link>
+        <Link to="/" className="Logo"><img src={logo} alt="" width='50px'/></Link>
         <form onSubmit={handleSearch}>
             <input 
                 type="text" 

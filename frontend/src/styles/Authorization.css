@@ -1,0 +1,22 @@
+main {
+    align-items: center;
+}
+
+.LoginContainer,.SignupContainer {
+    width: 500px;
+    height: 400px;
+    position: relative;
+    /* background-color: #181c1f; */
+    border-radius: 8px;
+}
+
+.LoginContainer button,.SignupContainer button,.LoginContainer input,.SignupContainer input{
+    width: 80%;
+    height: 2.5rem;
+    margin: 15px 0px 15px;
+    border-radius: 8px;
+}
+
+.LoginContainer h1, .SignupContainer h1 {
+    font-size: 2rem;
+}

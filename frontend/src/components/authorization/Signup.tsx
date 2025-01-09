@@ -30,29 +30,29 @@ function Signup() {
         }
     };
 
-    return <div>
-        <h1>Signing up...</h1>
-        <Link to="/">Go back</Link>
+    return <div className="SignupContainer">
+        <h1>Welcome</h1>
+        <p>Enter your credentials to sign up</p>
         <form onSubmit={handleSignup}>
                 <div>
-                    <label >Email: </label>
-                    <input 
+                    <input
                         type="text"
+                        placeholder="Enter your email"
                         value={email}
                         onChange={e => setEmail(e.target.value)}
-                        required 
+                        required
                     />
                 </div>
                 <div>
-                    <label >Password: </label>
-                    <input 
+                    <input
                         type="password"
+                        placeholder="Enter your password"
                         value={password}
                         onChange={e => setPassword(e.target.value)}
-                        required 
+                        required
                     />
                 </div>
-                <button type="submit">Submit</button>
+                <button type="submit">Sign Up</button>
             </form>
     </div>
 }
