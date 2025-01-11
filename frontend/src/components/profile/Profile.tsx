@@ -26,6 +26,7 @@ function Profile () {
         <h1>Profile...</h1>
         <p>{`User: ${user.id}`}</p>
         <p>{`Email: ${user.email}`}</p>
+        <p>{`Username: ${user.username}`}</p>
         <p>{`Created at: ${user.created_at}`}</p>
         <button onClick={handlePosts}>Posts</button>
         <button onClick={handleComments}>Comments</button>

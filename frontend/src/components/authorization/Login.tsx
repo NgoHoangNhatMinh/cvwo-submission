@@ -8,6 +8,7 @@ function Login() {
     const {setLoggedIn} = useAuth();
     const {setUser} = useUser();
     const [email, setEmail] = useState<string>("");
+    const [username, setUsername] = useState<string>("");
     const [password, setPassword] = useState<string>("");
     const navigate = useNavigate();
 
@@ -42,6 +43,15 @@ function Login() {
                         placeholder="Enter your email"
                         value={email}
                         onChange={e => setEmail(e.target.value)}
+                        required
+                    />
+                </div>
+                <div>
+                    <input
+                        type="text"
+                        placeholder="Enter your username"
+                        value={username}
+                        onChange={e => setUsername(e.target.value)}
                         required
                     />
                 </div>
