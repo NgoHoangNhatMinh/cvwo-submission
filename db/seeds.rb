@@ -24,7 +24,7 @@ User.destroy_all
     User.create!(
         id: i + 1,
         email: "test" + i.to_s + "@example.com",
-        username: "test" + i.to_s
+        username: "test" + i.to_s,
         password: "password"
     )
 end
