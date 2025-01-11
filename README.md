@@ -29,8 +29,9 @@
    $ rails db:migrate
    $ rails db:seed
    ```
+Potential problem: if encounter error after "rails db:migrate" with this error: "ActiveSupport::MessageEncryptor::InvalidMessage: ActiveSupport::MessageEncryptor::InvalidMessage", navigate to config folder and delete credentials.yml.enc and master.key files and run the first command again before proceeding to the second command.
 
-5. Create an .env file in the frontend directory and paste:
+5. Create an .env.development file in the frontend directory and paste:
    ```
    VITE_API_URL=http://localhost:3000/
    ```
@@ -40,7 +41,7 @@
    $ rails s
    ```
 
-7. Start the React frontend:
+7. Open another console and start the React frontend:
    ```console
    $ cd frontend
    $ npm run dev
