@@ -23,11 +23,8 @@ function Profile () {
     }
 
     return <div>
-        <h1>Profile...</h1>
-        <p>{`User: ${user.id}`}</p>
-        <p>{`Email: ${user.email}`}</p>
-        <p>{`Username: ${user.username}`}</p>
-        <p>{`Created at: ${user.created_at}`}</p>
+        <h1>{`${user.username}`}</h1>
+        <p>{`${user.email}`}</p>
         <button onClick={handlePosts}>Posts</button>
         <button onClick={handleComments}>Comments</button>
         <Outlet/>

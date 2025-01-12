@@ -21,6 +21,7 @@ function Header() {
     function handleLogout() {
         setLoggedIn(false);
         localStorage.removeItem("auth_token");
+        navigate("/");
     }
 
     function handleLogin() {
