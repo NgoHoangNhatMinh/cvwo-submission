@@ -1,6 +1,6 @@
 .ShowPostContainer {
-    width: 500px;
-    height: 250px;
+    max-width: 500px;
+    /* max-height: 250px; */
     position: relative;
     /* background-color: #181c1f; */
     /* border-radius: 8px; */
@@ -8,7 +8,7 @@
 }
 
 .PostContent {
-    height: 150px;
+    /* height: 150px; */
 }
 
 .PostOptions {
@@ -17,9 +17,13 @@
 }
 
 .CommentsContainer {
-    margin: 20px 10px 20px;
+    /* margin: 20px 10px 20px; */
     border-radius: 10px;
     padding: 15px 0px 15px;
+}
+
+.IndexComments {
+    margin: 20px 10px 20px;
 }
 
 .ShowPostContainer {

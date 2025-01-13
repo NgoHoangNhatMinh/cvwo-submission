@@ -102,6 +102,7 @@ function Header() {
 
     return <div className="HeaderContainer">
         <Link to="/" className="Logo"><img src={Logo} alt="" width='30px'/></Link>
+        {/* In small screen, search form should turn into icon that can expand the whole bar upon click */}
         <FormControl
             className="Form"
             component="form" // Ensures this acts as a form element
@@ -109,7 +110,7 @@ function Header() {
             sx={{
                 m: 1,
                 minWidth: 200,
-                display: "flex",
+                display: { xs: 'none', sm: 'flex' },
                 flexDirection: "row",
                 gap: 2,
                 alignItems: "center",

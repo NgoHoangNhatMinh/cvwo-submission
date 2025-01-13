@@ -91,6 +91,12 @@ main {
     background-color: var(--secondary-main);
 }
 
+@media (max-width: 600px) {
+    main {
+        margin: 0px 100px 0px;
+    }
+}
+
 /* FOOTER COMPONENTS */
 
 .FooterContainer {
@@ -103,7 +109,7 @@ main {
 
 .FooterContainer .SocialsContainer {
     display: flex;
-    gap: 10px;
+    gap: 5px;
 }
 
 .FooterContainer div {
@@ -111,9 +117,9 @@ main {
 }
 
 .FooterContainer .SocialIcon {
-    width: 30px;
+    max-width: 30px;
 }
 
 .LogoContainer img {
-    width: 100px;
+    max-width: 100px;
 }
