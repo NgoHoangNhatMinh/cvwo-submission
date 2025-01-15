@@ -1,6 +1,8 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useUser } from "../contexts/UserContext";
 import { Outlet, useNavigate } from "react-router-dom";
+import "../../styles/Profile.css"
+import axios from "axios";
 
 function Profile () {
     const API_URL: string | undefined = import.meta.env.VITE_API_URL;
@@ -17,43 +19,28 @@ function Profile () {
         navigate("/user/comments")
     }
 
-    async function handleUpdateProfile(e: any) {
+    async function handleUpdateProfile(e: React.FormEvent) {
         e.preventDefault();
-
-        if (!image || image.length === 0) {
-            alert("Please upload an image");
-            return;
-        }
     
-        console.log(image[0])
-
-        // Image cannot be sent as json file, instead isomg formData
+        // Image cannot be sent as json file, instead append to formData
         const formData = new FormData();
         formData.append("user[username]", username);
-        formData.append("user[image]", image[0]);
-
-        for (const value of formData.values()) {
-            console.log(value)
+        if (image) {
+            formData.append("user[image]", image[0]);
         }
 
+        // Get token to verify current user to authorize updating comment data
         const token = localStorage.getItem('auth_token');
 
         try {
-            const response = await fetch(`${API_URL}/signup`, {
-                method: "PATCH",
+            const response = await axios.patch(`${API_URL}/signup`, formData, {
                 headers: {
                     Authorization: `${token}`,
                 },
-                body: formData,
             });
     
-            if (!response.ok) {
-                throw new Error("Failed to update profile.");
-            }
-    
-            const data = await response.json();
-            setUser(data);
-        } catch (error: any) {
+            setUser(response.data.data);
+        } catch (error) {
         }
     }
     
@@ -67,9 +54,13 @@ function Profile () {
     }
 
     return <div>
-        <img src={user.image_url} alt="" width={`50px`}/>
-        <h1>{`${user.username}`}</h1>
-        <p>{`${user.email}`}</p>
+        <div className="ProfileContainer">
+            <img src={user.image_url} alt="" width={`50px`}/>
+            <div className="ProfileInfo">
+                <h1>{`${user.username}`}</h1>
+                <p>{`${user.email}`}</p>
+            </div>
+        </div>
         <button onClick={handlePosts}>Posts</button>
         <button onClick={handleComments}>Comments</button>
         <form onSubmit={handleUpdateProfile}>
@@ -79,13 +70,6 @@ function Profile () {
             <button type="submit">Change</button>    
         </form>        
         <Outlet/>
-        {/* <h2>User's posts</h2>
-            <h2>User's comments</h2>
-        {
-            comments.length > 0
-                ? comments.map(comment => {return <div key={comment.id}>{comment.content}</div>})
-                : <p>No comments available</p>
-        } */}
     </div>
 }
 

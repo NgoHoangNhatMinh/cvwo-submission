@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom';
-import { Link } from 'react-router-dom';
 import DestroyPost from './DestroyPost';
 import UpdatePost from './UpdatePost';
 import { Post } from '../../interfaces';

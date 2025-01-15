@@ -1,7 +1,13 @@
+import axios from "axios";
 import { Post, PostData } from "../../interfaces";
 import { useState } from "react";
 
-function UpdatePost({post, handleEditState, handleChange, navigate}: {post: Post | undefined, handleEditState: any, handleChange: any, navigate: any}): JSX.Element {
+function UpdatePost({post, handleEditState, handleChange, navigate}: 
+    {
+        post: Post | undefined, 
+        handleEditState: () => void, 
+        handleChange: (topic: string, content: string) => void, 
+        navigate: any}): JSX.Element {
     // To return early for empty post
     if (!post) {
         return <div>
@@ -20,35 +26,31 @@ function UpdatePost({post, handleEditState, handleChange, navigate}: {post: Post
         if (!post)
             return
 
+        // Get token to verify current user to authorize updating comment data
         const token = localStorage.getItem('auth_token');
 
         const postData: PostData = {
-            // FIX HOW TO FETCH CURRENT USER AND CATEGORY
-            // CURRENTLY USING DEFAULT ID=1
-            post: {topic, content, category_id: 1},
+            post: {topic, content, category_id: post.category_id},
         }
 
         // Send PUT request to server with the updated post data
         try {
-            const response: Response = await fetch(`${API_URL}/posts/${post.id}`, {
-                method: "PUT",
+            const response = await axios.put(`${API_URL}/posts/${post.id}`, postData, {
                 headers: {
                     "Content-Type": "application/json",
                     "Authorization": `${token}`
                 },
-                body: JSON.stringify(postData)
             })
 
             if (response.status === 401) {
                 alert("You must log in first")
                 navigate("/login")
-            } else if (!response.ok) {
-                alert("Failed to update post");
             } else {
                 handleChange(topic, content);
+                alert("Update successfully");
             }
-        } catch(e) {
-            alert('Failed to update post');
+        } catch (error) {
+            alert("Failed to update post");
         }
         // Toggle back to read mode
         handleEditState();

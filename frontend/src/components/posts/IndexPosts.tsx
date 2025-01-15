@@ -3,6 +3,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Post } from '../../interfaces';
 import '../../styles/IndexPosts.css'
 import { InputLabel, FormControl, Select, MenuItem } from '@mui/material';
+import axios from 'axios';
 
 function IndexPosts(): JSX.Element {
     const API_URL: string | undefined = import.meta.env.VITE_API_URL;
@@ -17,24 +18,25 @@ function IndexPosts(): JSX.Element {
     }
 
     function handleSort(event: any) {
-        const newParams = new URLSearchParams(searchParams); // Clone existing params
-        newParams.set("sort", event.target.value); // Add or update the "sort" parameter
-        setSearchParams(newParams); // Update the URL with the new parameters
+        // Clone existing params
+        const newParams = new URLSearchParams(searchParams); 
+        // Add or update the "sort" parameter
+        newParams.set("sort", event.target.value); 
+        // Update the URL with the new parameters
+        setSearchParams(newParams); 
     }
 
-    // fetch posts data on mount
+    // fetch posts data on mount or when search params are updated
     useEffect(() => {
-        fetch(`${API_URL}/posts/?${searchParams}`)
-        .then(response => {
-            if (!response.ok)
-                throw new Error('Network response was not ok');
-            return response.json();
-        })
-        .then(data => {
-            setPosts(data);
-            setLoading(false);
-        })
-        .catch(error => setError(error.message))
+        axios.get(`${API_URL}/posts/?${searchParams}`)
+            .then(response => {
+                setPosts(response.data);
+                setLoading(false);
+            })
+            .catch(error => {
+                setError(error.message);
+                setLoading(false);
+            })
     }, [searchParams]);
 
     if (error) {

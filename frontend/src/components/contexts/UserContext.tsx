@@ -1,14 +1,9 @@
-import { createContext, useContext, useState } from "react";
-import { User } from "../../interfaces";
-
-interface UserContextProps {
-    user: User | undefined;
-    setUser: (value: User | undefined) => void;
-}
+import { createContext, ReactNode, useContext, useState } from "react";
+import { User, UserContextProps } from "../../interfaces";
 
 const UserContext = createContext<UserContextProps | undefined>(undefined);
 
-export function UserProvider({children}: {children: any}) {
+export function UserProvider({children}: {children: ReactNode}) {
     const [user, setUser] = useState<User | undefined>(undefined)
 
     return (

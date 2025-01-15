@@ -1,13 +1,9 @@
-import { createContext, useContext, useState } from "react";
-
-interface AuthContextProps {
-    loggedIn: boolean;
-    setLoggedIn: (value: boolean) => void
-}
+import { createContext, ReactNode, useContext, useState } from "react";
+import { AuthContextProps } from "../../interfaces";
 
 const AuthContext = createContext<AuthContextProps | undefined>(undefined);
 
-export function AuthProvider({children}: {children: any}) {
+export function AuthProvider({children}: {children: ReactNode}) {
     const [loggedIn, setLoggedIn] = useState(false)
 
     return (

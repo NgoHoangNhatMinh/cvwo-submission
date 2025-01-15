@@ -1,13 +1,9 @@
-import { createContext, useContext, useState } from "react";
-
-interface ThemeContextProps {
-    isDarkMode: boolean;
-    setIsDarkMode: (value: boolean) => void
-}
+import { createContext, ReactNode, useContext, useState } from "react";
+import { ThemeContextProps } from "../../interfaces";
 
 const ThemeContext = createContext<ThemeContextProps | undefined>(undefined);
 
-export function ThemeProvider({children}: {children: any}) {
+export function ThemeProvider({children}: {children: ReactNode}) {
     const [isDarkMode, setIsDarkMode] = useState(false)
 
     return (

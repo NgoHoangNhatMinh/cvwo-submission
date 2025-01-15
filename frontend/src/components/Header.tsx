@@ -6,6 +6,7 @@ import { Category } from "../interfaces";
 import Logo from '../assets/react.svg'
 import { Button, FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material";
 import { useTheme } from "./contexts/ThemeContext";
+import axios from "axios";
 
 function Header() {
     const {loggedIn, setLoggedIn} = useAuth();
@@ -17,6 +18,7 @@ function Header() {
     const [searchParams, setSearchParams] = useSearchParams();
     const [categories, setCategories] = useState<Category[]>([]);
     const [categoryID, setCategoryID] = useState<number | undefined>();
+    const [error, setError] = useState<string>("");
 
     function handleLogout() {
         setLoggedIn(false);
@@ -58,12 +60,14 @@ function Header() {
 
     useEffect(() => {
         const token = localStorage.getItem('auth_token');
+
+        // Fetch current user information and logged in status based on token verification
         if (token === null) {
             setLoggedIn(false);
             setUser(undefined);
         } else {
             setLoggedIn(true);
-            fetch(`${API_URL}/current_user`, {
+            axios.get(`${API_URL}/current_user`, {
                 headers: {
                     "Authorization": `${token}`
                 }
@@ -74,13 +78,15 @@ function Header() {
                         localStorage.removeItem('auth_token');
                         return undefined;
                     } else {
-                        return response.json()
+                        setUser(response.data)
                     }
                 })
-                .then(data => setUser(data))
+                .catch (error => {
+                    setError(error.message);
+                }) 
         }
 
-        // Set theme
+        // Set theme based on existing preference
         const isDark = localStorage.getItem('is_dark');
         if (isDark === null) {
             setIsDarkMode(false);
@@ -89,10 +95,10 @@ function Header() {
         } 
     }, [])
 
+    // Fetch categories data on mount
     useEffect(() => {
-        fetch(`${API_URL}/categories`)
-            .then(response => response.json())
-            .then(data => {setCategories(data)})
+        axios.get(`${API_URL}/categories`)
+            .then(response => {setCategories(response.data)})
     }, [])
 
     useEffect(() => {

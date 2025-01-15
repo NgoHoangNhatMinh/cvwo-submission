@@ -28,7 +28,6 @@ export interface Comment {
 export interface CommentData {
     comment: {
         content: string;
-        user_id: number;
         post_id: number;
     }
 }
@@ -54,4 +53,19 @@ export interface User {
     image_url?: string,
     username: string;
     created_at: string;
+}
+
+export interface AuthContextProps {
+    loggedIn: boolean;
+    setLoggedIn: (value: boolean) => void
+}
+
+export interface ThemeContextProps {
+    isDarkMode: boolean;
+    setIsDarkMode: (value: boolean) => void
+}
+
+export interface UserContextProps {
+    user: User | undefined;
+    setUser: (value: User | undefined) => void;
 }

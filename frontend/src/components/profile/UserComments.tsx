@@ -1,20 +1,20 @@
 import { useEffect, useState } from "react";
 import { useUser } from "../contexts/UserContext";
 import { Comment } from "../../interfaces";
+import axios from "axios";
 
 function UserComments() {
     const {user} = useUser();
     const API_URL: string | undefined = import.meta.env.VITE_API_URL;
     const [comments, setComments] = useState<Comment[]>([])
 
+    // Get current user's comments data
     useEffect(() => { 
         if (user) {
             try {
-                fetch(`${API_URL}/user/${user.id}/comments`)
-                    .then(response => response.json())
-                    .then(data => setComments(data))
+                axios.get(`${API_URL}/user/${user.id}/comments`)
+                    .then(response => setComments(response.data))
             } catch (error: any) {
-                console.log(error.message)
             }
         }
     }, [user, API_URL])

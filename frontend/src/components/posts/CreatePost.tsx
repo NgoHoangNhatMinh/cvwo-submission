@@ -1,8 +1,9 @@
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Category, PostData } from "../../interfaces";
 import "../../styles/CreatePost.css"
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
+import axios from "axios";
 
 function CreatePost(): JSX.Element {
     const API_URL: string | undefined = import.meta.env.VITE_API_URL;
@@ -20,35 +21,35 @@ function CreatePost(): JSX.Element {
             throw new Error("Must enter category")
         }
 
+        // Get token to verify current user to fetch their comment data
         const token = localStorage.getItem('auth_token');
         const postData: PostData = {
-            // FIX HOW TO FETCH AND CATEGORY
-            // CURRENTLY USING DEFAULT ID=1
             post: {topic, content, category_id: categoryID},
         }
 
-        const response = await fetch(`${API_URL}/posts`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `${token}`
-            },
-            body: JSON.stringify(postData)
-        })
+        try {
+            const response = await axios.post(`${API_URL}/posts`, postData, {
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `${token}`
+                },
+            })
 
-        if (response.status === 401) {
-            alert("You must log in first")
-            navigate("/login")
-        } else if (response.ok) {
-            const data = await response.json();
-            alert("Post created successfully!");
-            navigate(`/posts/${data.id}`);
-        } else {
+            if (response.status === 401) {
+                // status UNATHORIZED
+                alert("You must log in first")
+                navigate("/login")
+            } else {
+                alert("Post created successfully!");
+                navigate(`/posts/${response.data.id}`);
+            }
+        } catch(e) {
             console.error("Validation errors");
             alert("Failed to create post");
         }
     }
 
+    // Fetch available categories
     useEffect(() => {
         fetch(`${API_URL}/categories`)
             .then(response => response.json())
@@ -59,9 +60,6 @@ function CreatePost(): JSX.Element {
         <div className="CreatePostContainer">
             <h1>Create new post</h1>
             <form onSubmit={handleSubmit}>
-                {/* <select name="categories" id="categories" onChange={e => setCategoryID(Number(e.target.value))}>
-                    {categories.map((category => <option value={category.id} key={category.id}>{category.name}</option>))}
-                </select> */}
                 <FormControl sx={{ minWidth: 200, marginBottom: 2 }}>
                     <InputLabel>Category</InputLabel>
                     <Select onChange={e => setCategoryID(Number(e.target.value))}>

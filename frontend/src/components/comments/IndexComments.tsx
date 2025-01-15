@@ -6,6 +6,7 @@ import CreateComment from './CreateComment';
 import "../../styles/Comment.css"
 import { useNavigate } from 'react-router-dom';
 import { useUser } from '../contexts/UserContext';
+import axios from 'axios';
 
 function IndexComments({post_id}: {post_id: number}): JSX.Element {
     const API_URL: string | undefined = import.meta.env.VITE_API_URL;
@@ -52,17 +53,15 @@ function IndexComments({post_id}: {post_id: number}): JSX.Element {
 
     // fetch comments data on mount
     useEffect(() => {
-        fetch(`${API_URL}/posts/${post_id}/comments`)
+        axios.get(`${API_URL}/posts/${post_id}/comments`)
             .then(response => {
-                if (!response.ok)
-                    throw new Error('Network response was not ok');
-                return response.json();
+                setComments(response.data);
+                setLoading(false)
             })
-            .then(data => {
-                setComments(data);
+            .catch(error => {
+                setError(error.message);
                 setLoading(false);
             })
-            .catch(error => setError(error.message))
     }, []);
 
     if (error) {

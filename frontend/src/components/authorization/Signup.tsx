@@ -1,7 +1,8 @@
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { useUser } from "../contexts/UserContext";
+import axios from "axios";
 
 function Signup() {
     const {setLoggedIn} = useAuth();
@@ -9,25 +10,35 @@ function Signup() {
     const [email, setEmail] = useState<string>("");
     const [username, setUsername] = useState<string>("");
     const [password, setPassword] = useState<string>("");
+    const API_URL: string | undefined = import.meta.env.VITE_API_URL;
     const navigate = useNavigate();
 
-    async function handleSignup(event: any) {
+    async function handleSignup(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
-        const response = await fetch('http://localhost:3000/signup', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ user: { email, password, username } }),
-        });
-        if (response.ok) {
-            const data = await response.json()
-            const token = response.headers.get("Authorization") + "";
+
+        try {
+            // Send a POST request to /signup with the user email, username, and password
+            const response = await axios.post(`${API_URL}/signup`, { user: { email, password, username } }, {
+                headers: { 'Content-Type': 'application/json' },
+            })
+
+            // The server respond with an authorization token to verify user + user data
+            const token = response.headers["authorization"]
+            const userData = response.data.data;
+
+            // Save the token to browser to allow user to stay logged in until token expire (in 30 minutes) 
+            // Save current user data for display
             localStorage.setItem('auth_token', token);
+            localStorage.setItem('user_data', userData)
+
             setLoggedIn(true);
-            setUser(data.data);
-            alert("Sign up successfully")
+            setUser(response.data.data);
+
+            // Go to homepage
             navigate("/")
-        } else {
-            alert("Cannot sign up")
+        } catch (error) {
+            console.error("Sign up error:", error);
+            alert("Cannot sign up");
         }
     };
 

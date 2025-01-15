@@ -1,20 +1,20 @@
 import { useEffect, useState } from "react";
 import { useUser } from "../contexts/UserContext";
 import { Post } from "../../interfaces";
+import axios from "axios";
 
 function UserPosts() {
     const {user} = useUser();
     const API_URL: string | undefined = import.meta.env.VITE_API_URL;
     const [posts, setPosts] = useState<Post[]>([])
 
+    // Get current user's posts data
     useEffect(() => { 
         if (user) {
             try {
-                fetch(`${API_URL}/user/${user.id}/posts`)
-                    .then(response => response.json())
-                    .then(data => setPosts(data))
+                axios.get(`${API_URL}/user/${user.id}/posts`)
+                    .then(response => setPosts(response.data))
             } catch (error: any) {
-                console.log(error.message)
             }
         }
     }, [user, API_URL])
