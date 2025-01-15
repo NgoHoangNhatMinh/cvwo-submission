@@ -10,6 +10,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # PATCH /signup
   def update
     @user = current_user # Ensure the user is authenticated
+
     if @user.update(account_update_params)
       respond_with(@user) # Success response
     else
@@ -33,10 +34,18 @@ class Users::RegistrationsController < Devise::RegistrationsController
         status: { code: 200, message: "Account deleted successfully."}
       }, status: :ok
     elsif request.method == "PUT" || request.method == "PATCH"
-      render json: {
-        status: {code: 200, message: "Updated sucessfully"},
-        data: UserSerializer.new(resource).serializable_hash[:data][:attributes]
-      }, status: :ok
+      # After updating, if there is image attached, return generate image_url from current image and return as attribute 
+      if resource.image.attached?
+        render json: {
+          status: {code: 200, message: "Updated sucessfully"},
+          data: UserSerializer.new(resource).serializable_hash[:data][:attributes].as_json.merge(image_url: url_for(resource.image))
+        }, status: :ok
+      else
+        render json: {
+          status: {code: 200, message: "Updated sucessfully"},
+          data: UserSerializer.new(resource).serializable_hash[:data][:attributes]
+        }, status: :ok
+      end
     else
       render json: {
         status: {code: 422, message: "User couldn't be created successfully. #{resource.errors.full_messages.to_sentence}"}
