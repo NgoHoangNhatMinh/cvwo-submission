@@ -27,7 +27,7 @@ function Signup() {
             alert("Sign up successfully")
             navigate("/")
         } else {
-            alert("No such user")
+            alert("Cannot sign up")
         }
     };
 

@@ -9,6 +9,12 @@ Rails.application.routes.draw do
     sessions: 'users/sessions',
     registrations: 'users/registrations'
   }
+
+  # Route to update user information
+  as :user do
+    patch '/signup', to: 'users/registrations#update'
+  end
+
   resources :categories
   resources :comments
   # Create nested routes for comments of posts
