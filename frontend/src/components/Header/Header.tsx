@@ -1,12 +1,16 @@
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
-import { useAuth } from "./contexts/AuthContext";
+import { useAuth } from "../contexts/AuthContext";
 import { useEffect, useState } from "react";
-import { useUser } from "./contexts/UserContext";
-import { Category } from "../interfaces";
-import Logo from '../assets/react.svg'
-import { Button, FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material";
-import { useTheme } from "./contexts/ThemeContext";
+import { useUser } from "../contexts/UserContext";
+import { Category } from "../../interfaces";
+import Logo from '../../assets/react.svg'
+import { Button, FormControl, InputLabel, MenuItem, Select, TextField, Avatar, InputAdornment} from "@mui/material";
+import { useTheme } from "../contexts/ThemeContext";
 import axios from "axios";
+import { AccountMenu } from "./AccountMenu";
+import ContrastIcon from '@mui/icons-material/Contrast';
+import AddIcon from '@mui/icons-material/Add';
+import SearchIcon from '@mui/icons-material/Search';
 
 function Header() {
     const {loggedIn, setLoggedIn} = useAuth();
@@ -39,7 +43,7 @@ function Header() {
     }
 
     function handleProfile() {
-        navigate('/user');
+        navigate("/user")
     }
 
     function handleThemeChange() {
@@ -83,6 +87,7 @@ function Header() {
                 })
                 .catch (error => {
                     setError(error.message);
+                    throw new Error(error.message);
                 }) 
         }
 
@@ -107,57 +112,67 @@ function Header() {
       }, [isDarkMode]);
 
     return <div className="HeaderContainer">
-        <Link to="/" className="Logo"><img src={Logo} alt="" width='30px'/></Link>
+        <Link to="/" className="LeftHeader"><Avatar src={Logo}></Avatar></Link>
         {/* In small screen, search form should turn into icon that can expand the whole bar upon click */}
-        <FormControl
-            className="Form"
-            component="form" // Ensures this acts as a form element
-            onSubmit={handleSearch}
-            sx={{
-                m: 1,
-                minWidth: 200,
-                display: { xs: 'none', sm: 'flex' },
-                flexDirection: "row",
-                gap: 2,
-                alignItems: "center",
+        <div className="MiddleHeader">
+            <FormControl
+                className="Form"
+                component="form" // Ensures this acts as a form element
+                onSubmit={handleSearch}
+                sx={{
+                    m: 1,
+                    minWidth: 200,
+                    display: { xs: 'none', sm: 'flex' },
+                    flexDirection: "row",
+                    gap: 2,
+                    alignItems: "center",
+                }
             }
-        }
-        >
-            <TextField
-                className="TextField"
-                id="searchbox"
-                label="Search Forum"
-                variant="outlined"
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-            />
-            <InputLabel id="category-select-label" sx={{ whiteSpace: "nowrap" }}></InputLabel>
-            <Select
-                className="Select"
-                labelId="category-select-label"
-                id="category-select"
-                value={categoryID}
-                onChange={(e) => setCategoryID(Number(e.target.value))}
             >
-                {categories.map((category) => (
-                <MenuItem value={category.id} key={category.id}>
-                    {category.name}
-                </MenuItem>
-                ))}
-            </Select>
-            <Button type="submit" variant="contained">Search</Button>
-        </FormControl>
-        <div className="Options">
-            <button onClick={handleThemeChange}>{isDarkMode ? "Light Mode" : "Dark Mode"}</button>
+                <TextField
+                    className="TextField"
+                    id="searchbox"
+                    label="Search Forum"
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
+                    slotProps={{
+                    input: {
+                        startAdornment: (
+                        <InputAdornment position="start">
+                            <SearchIcon />
+                        </InputAdornment>
+                        ),
+                    },
+                    }}
+                    variant="outlined"
+                />
+                {/* <InputLabel id="category-select-label" sx={{ whiteSpace: "nowrap" }}></InputLabel>
+                <Select
+                    className="Select"
+                    labelId="category-select-label"
+                    id="category-select"
+                    value={categoryID}
+                    onChange={(e) => setCategoryID(Number(e.target.value))}
+                >
+                    {categories.map((category) => (
+                    <MenuItem value={category.id} key={category.id}>
+                        {category.name}
+                    </MenuItem>
+                    ))}
+                </Select> */}
+            </FormControl>
+        </div>
+        <div className="RightHeader">
+            <Button onClick={handleThemeChange}><ContrastIcon></ContrastIcon></Button>
             {loggedIn 
                 ? <>
-                    <button onClick={handleLogout}>Log out</button>
-                    <button onClick={handleCreate}>Create</button>
-                    <button onClick={handleProfile}>Profile</button>
+                    <Button onClick={handleLogout}>Log out</Button>
+                    <Button onClick={handleCreate}><AddIcon></AddIcon> Create</Button>
+                    <AccountMenu handleLogout={handleLogout} handleProfile={handleProfile}></AccountMenu>
                 </> 
                 : <>
-                    <button onClick={handleSignup}>Sign up</button>
-                    <button onClick={handleLogin}>Log in</button>
+                    <Button onClick={handleSignup}>Sign up</Button>
+                    <Button onClick={handleLogin}>Log in</Button>
                 </>
             }
         </div>

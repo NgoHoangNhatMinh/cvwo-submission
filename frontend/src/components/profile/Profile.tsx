@@ -3,6 +3,7 @@ import { useUser } from "../contexts/UserContext";
 import { Outlet, useNavigate } from "react-router-dom";
 import "../../styles/Profile.css"
 import axios from "axios";
+import { Avatar } from "@mui/material";
 
 function Profile () {
     const API_URL: string | undefined = import.meta.env.VITE_API_URL;
@@ -55,7 +56,10 @@ function Profile () {
 
     return <div>
         <div className="ProfileContainer">
-            <img src={user.image_url} alt="" width={`50px`}/>
+            {user?.image_url
+                            ? <Avatar src={user?.image_url} sx={{ width: 150, height: 150 }}></Avatar>
+                            : <Avatar sx={{ width: 150, height: 150 }}>{user?.username}</Avatar>
+                        }
             <div className="ProfileInfo">
                 <h1>{`${user.username}`}</h1>
                 <p>{`${user.email}`}</p>

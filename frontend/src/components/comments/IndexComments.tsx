@@ -7,15 +7,20 @@ import "../../styles/Comment.css"
 import { useNavigate } from 'react-router-dom';
 import { useUser } from '../contexts/UserContext';
 import axios from 'axios';
+import { Avatar } from '@mui/material';
 
 function IndexComments({post_id}: {post_id: number}): JSX.Element {
     const API_URL: string | undefined = import.meta.env.VITE_API_URL;
     const [comments, setComments] = useState<Comment[]>([]);
     const [loading, setLoading] = useState<Boolean>(true);
     const [error, setError] = useState<string>("");
+    // 
     const [edit, setEdit] = useState<Record<number,boolean>>({});
     const navigate = useNavigate();
     const {user} = useUser();
+    // Fetch all users --> should instead fetch the user associated to the comment instead of this but I'll use this for now
+    // I give up for now
+    const [users, setUsers] = useState<Record<number,{ username: string; image_url?: string }>>([]);
 
     async function handleDelete(comment: Comment) {
         // Request DELETE current post to the server
@@ -62,6 +67,12 @@ function IndexComments({post_id}: {post_id: number}): JSX.Element {
                 setError(error.message);
                 setLoading(false);
             })
+
+        axios.get(`${API_URL}/users`)
+            .then(response => {
+                setUsers(response.data);
+            })
+            .catch()
     }, []);
 
     if (error) {
@@ -88,8 +99,11 @@ function IndexComments({post_id}: {post_id: number}): JSX.Element {
                     firstTenComments.map((comment) => {
                         if (!edit[comment.id]) {
                             return <div key={comment.id} className='Comment'>
-                                <p className='CommentUser'>{"User " + comment.user_id}</p>
-                                <p>{comment.content}</p>
+                                <Avatar src={user?.image_url} alt="" className='UserAvatar'/>
+                                <div className="CommentInfo">
+                                    <p className='CommentUser'>{"User " + comment.user_id}</p>
+                                    <p>{comment.content}</p>
+                                </div>
                                 {
                                     user !== undefined && comment.user_id === user.id
                                         ?   <div className="CommentOptions">

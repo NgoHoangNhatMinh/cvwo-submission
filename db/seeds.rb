@@ -35,7 +35,7 @@ Post.destroy_all
     Post.create!(
         id: i + 1,
         topic: Faker::Lorem.sentence(word_count: 3),
-        content: Faker::Lorem.paragraph(sentence_count: 3),
+        content: Faker::Lorem.paragraph(sentence_count: 15),
         # Arbitrary numbers --> id starts from 1
         user_id: i % 5 + 1,
         category_id: i %  5 + 1

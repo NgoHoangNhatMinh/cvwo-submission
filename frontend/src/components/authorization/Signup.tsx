@@ -18,6 +18,7 @@ function Signup() {
 
         try {
             // Send a POST request to /signup with the user email, username, and password
+
             const response = await axios.post(`${API_URL}/signup`, { user: { email, password, username } }, {
                 headers: { 'Content-Type': 'application/json' },
             })

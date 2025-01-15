@@ -2,6 +2,8 @@
 
 .IndexComments .Comment {
     margin: 1rem 0px 1rem;
+    display: flex;
+    gap: 10px;
 }
 
 .IndexComments .Comment p{
@@ -10,6 +12,12 @@
 
 .IndexComments .CommentUser {
     font-weight: 600;
+}
+
+.IndexComments .UserAvatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
 }
 
 .CommentOptions {

@@ -6,10 +6,17 @@ class Users::SessionsController < Devise::SessionsController
   private
 
   def respond_with(resource, _opts = {})
-    render json: {
-      status: {code: 200, message: 'Logged in sucessfully.'},
-      data: UserSerializer.new(resource).serializable_hash[:data][:attributes]
-    }, status: :ok
+    if resource.image.attached?
+      render json: {
+        status: {code: 200, message: "Logged in sucessfully"},
+        data: UserSerializer.new(resource).serializable_hash[:data][:attributes].as_json.merge(image_url: url_for(resource.image))
+      }, status: :ok
+    else
+      render json: {
+        status: {code: 200, message: "Logged in sucessfully"},
+        data: UserSerializer.new(resource).serializable_hash[:data][:attributes]
+      }, status: :ok
+    end
   end
 
   def respond_to_on_destroy

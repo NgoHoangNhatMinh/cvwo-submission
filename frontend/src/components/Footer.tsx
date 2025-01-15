@@ -4,6 +4,7 @@ import InstagramIcon from "../assets/instagram_icon.png"
 import GmailIcon from "../assets/gmail_icon.png"
 import Logo from "../assets/react.svg"
 import { Link } from "react-router-dom"
+import { Avatar } from "@mui/material"
 
 function Footer() {
     return <div className="FooterContainer">
@@ -11,7 +12,7 @@ function Footer() {
             <p>(Not) &copy; 2025 CVWO</p>
         </div>
         <div className="LogoContainer">
-            <Link to="/" className="Logo"><img src={Logo} alt="" /></Link>
+            <Link to="/" className="Logo"><Avatar src={Logo} alt="" sx={{width: 100, height: 100}}/></Link>
         </div>
         <div className="SocialsContainer">
             <a href="https://github.com/NgoHoangNhatMinh" target="_blank"><img src={FacebookIcon} alt="" className="SocialIcon"/></a>

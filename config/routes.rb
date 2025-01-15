@@ -15,6 +15,7 @@ Rails.application.routes.draw do
     patch '/signup', to: 'users/registrations#update'
   end
 
+  resources :users
   resources :categories
   resources :comments
   # Create nested routes for comments of posts
