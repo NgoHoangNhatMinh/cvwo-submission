@@ -5,7 +5,7 @@ import React from "react";
 import { useUser } from "../contexts/UserContext";
 import { Logout, Settings } from "@mui/icons-material";
 
-export function AccountMenu({handleLogout, handleProfile} : {handleLogout:any, handleProfile:any}) {
+export function AccountMenu({handleLogout, handleProfile, handleSetting} : {handleLogout:any, handleProfile:any, handleSetting:any}) {
     const {user} = useUser();
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
@@ -70,7 +70,7 @@ export function AccountMenu({handleLogout, handleProfile} : {handleLogout:any, h
                 <Avatar src={user?.image_url}/> Profile
             </MenuItem>
             <Divider />
-            <MenuItem onClick={handleClose}>
+            <MenuItem onClick={handleSetting}>
                 <ListItemIcon>
                     <Settings fontSize="small" />
                 </ListItemIcon>

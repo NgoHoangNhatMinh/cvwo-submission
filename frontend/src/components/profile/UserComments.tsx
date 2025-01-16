@@ -32,7 +32,11 @@ function UserComments() {
         <h1>User's comments</h1>
         {
             comments.length > 0
-                ? comments.map(comment => {return <div key={comment.id}>{comment.content}</div>})
+                ? comments.map(comment => {return <div key={comment.id}>
+                        <h4>{`Post ` + comment.post_id}</h4>
+                        <p>{"User " + comment.user_id + " commented on: "}</p>
+                        {comment.content}
+                    </div>})
                 : <p>No comments available</p>
         }
     </div>

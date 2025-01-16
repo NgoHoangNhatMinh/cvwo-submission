@@ -6,7 +6,8 @@ class PostsController < ApplicationController
 
   # GET /posts
   def index
-    @posts = Post.all
+    # Also include category data associated to the post
+    @posts = Post.includes(:category).all
 
     if params[:category_id].present?
       @posts = @posts.where(category_id: params[:category_id])
@@ -23,7 +24,8 @@ class PostsController < ApplicationController
       @posts = @posts.order(created_at: :desc)
     end
 
-    render json: @posts
+    # Also include category data associated to the post
+    render json: @posts.as_json(include: { category: { only: [:id, :name] } })
   end
 
   # GET /user/:user_id/posts
@@ -37,7 +39,7 @@ class PostsController < ApplicationController
 
   # GET /posts/1
   def show
-    render json: @post
+    render json: @post.as_json(include: { category: { only: [:id, :name] } })
   end
 
   # POST /posts
@@ -78,7 +80,8 @@ class PostsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_post
-      @post = Post.find(params.expect(:id))
+      # Also include category data associated to the post
+      @post = Post.includes(:category).find(params.expect(:id))
     end
 
     # Only allow a list of trusted parameters through.

@@ -101,7 +101,7 @@ function IndexComments({post_id}: {post_id: number}): JSX.Element {
                             return <div key={comment.id} className='Comment'>
                                 <Avatar src={user?.image_url} alt="" className='UserAvatar'/>
                                 <div className="CommentInfo">
-                                    <p className='CommentUser'>{"User " + comment.user_id}</p>
+                                    <p className='CommentUser'>{"User " + comment.user.username}</p>
                                     <p>{comment.content}</p>
                                 </div>
                                 {

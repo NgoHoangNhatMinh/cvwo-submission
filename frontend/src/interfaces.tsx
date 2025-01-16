@@ -6,6 +6,10 @@ export interface Post {
     updated_at: Date;
     user_id: number;
     category_id: number;
+    category: {
+        name: string;
+        id: number
+    }
 }
 
 export interface PostData {
@@ -23,6 +27,9 @@ export interface Comment {
     updated_at: Date;
     user_id: number;
     post_id: number;
+    user: {
+        username: string
+    }
 }
 
 export interface CommentData {

@@ -71,13 +71,12 @@ function IndexPosts(): JSX.Element {
             </FormControl>
             {
                 firstTenPosts.map((post) => {
-                    let postDate = new Date(post.created_at);
                     return <div className="PostBorder" key={post.id}>
                         <div onClick={() => navigateToPost(post.id)} className="Post">
-                            <p>{"Category: " + post.category_id}</p>
+                            <p>{post.category.name}</p>
                             <h2>{"Post " + post.id + " - " + post.topic}</h2>
                             <p>{post.content}</p>
-                            <p>{postDate.toLocaleDateString()}</p>
+                            <p>{new Date(post.created_at).toLocaleDateString()}</p>
                         </div>
                     </div>
                 })

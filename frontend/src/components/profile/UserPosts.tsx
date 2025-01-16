@@ -32,7 +32,11 @@ function UserPosts() {
         <h1>User's posts</h1>
         {
             posts.length > 0
-                ? posts.map(post => {return <div key={post.id}>{post.content}</div>})
+                ? posts.map(post => {return <div key={post.id}>
+                        <h5>{new Date(post.created_at).toLocaleDateString()}</h5>
+                        <h4>{`Post ` + post.id}</h4>
+                        {post.content}
+                    </div>})
                 : <p>No posts available</p>
         }
     </div>

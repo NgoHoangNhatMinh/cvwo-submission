@@ -10,12 +10,8 @@
 
 Category.destroy_all
 
-5.times do |i|
-    Category.create!(
-        id: i + 1,
-        name: Faker::Lorem.sentence(word_count: 1),
-        description: Faker::Lorem.paragraph(sentence_count: 1)
-    )
+["Academic", "Looking for Advice", "Accomodation", "Course", "Misc"].each_with_index do |category, i|
+    Category.find_or_create_by!(name: category, id: i + 1)
 end
 
 User.destroy_all

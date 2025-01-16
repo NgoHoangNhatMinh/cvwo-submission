@@ -6,12 +6,12 @@ class CommentsController < ApplicationController
   def index
     if params[:post_id]
     # only return comments belonging to the post
-      @comments = Comment.where(post_id: params[:post_id]).order(created_at: :desc)
+      @comments = Comment.includes(:user).where(post_id: params[:post_id]).order(created_at: :desc)
     else
-      @comments = Comment.all
+      @comments = Comment.includes(:user).all
     end
 
-    render json: @comments
+    render json: @comments.as_json(include: { user: { only: [ :username] } })
   end
 
   # GET /user/:user_id/comments
@@ -25,7 +25,7 @@ class CommentsController < ApplicationController
 
   # GET /comments/1
   def show
-    render json: @comment
+    render json: @comment.as_json(include: { user: { only: [ :username] } })
   end
 
   # POST /comments
@@ -64,7 +64,7 @@ class CommentsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_comment
-      @comment = Comment.find(params.expect(:id))
+      @comment = Comment.includes(:user).find(params.expect(:id))
     end
 
     # Only allow a list of trusted parameters through.

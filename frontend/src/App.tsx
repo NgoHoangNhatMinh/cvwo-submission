@@ -2,7 +2,7 @@ import './App.css'
 import './styles/Global.css'
 import { Outlet } from 'react-router-dom'
 import Header from './components/Header/Header'
-import Footer from './components/Footer'
+// import Footer from './components/Footer'
 import { AuthProvider } from './components/contexts/AuthContext'
 import { UserProvider } from './components/contexts/UserContext'
 import { ThemeProvider } from './components/contexts/ThemeContext'
@@ -19,7 +19,7 @@ function App() {
             <main>
               <Outlet/>
             </main>
-            <Footer/>
+            {/* <Footer/> */}
           </AuthProvider>
         </UserProvider>
       </ThemeProvider>

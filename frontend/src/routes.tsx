@@ -7,6 +7,7 @@ import Signup from "./components/authorization/Signup";
 import Profile from "./components/profile/Profile";
 import UserPosts from "./components/profile/UserPosts";
 import UserComments from "./components/profile/UserComments";
+import Setting from "./components/Setting";
 
 const routes = [
   {
@@ -46,6 +47,10 @@ const routes = [
             element: <UserComments />
           }
         ]
+      },
+      {
+        path: "setting",
+        element: <Setting />,
       },
     ]
   }
