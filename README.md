@@ -1,5 +1,8 @@
 # CVWO 2025 Assignment
 
+## Website
+https://cvwoforum.netlify.app/
+
 ## Local Installation
 
 1. You need the following prerequisites:
