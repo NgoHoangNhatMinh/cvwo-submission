@@ -1,4 +1,0 @@
-[build]
-  base = "frontend"  # This tells Netlify to look inside the frontend folder for the build
-  publish = "frontend/build"  # Assuming your build files are in frontend/build
-  command = "npm run build"  # Or the appropriate build command for your frontend
