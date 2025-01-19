@@ -7,7 +7,13 @@
 
 Rails.application.config.middleware.insert_before 0, Rack::Cors do
   allow do
-    origins "localhost:5173"
+    # origins "localhost:5173"
+
+    origins = if Rails.env.production?
+                "https://cvwoforum.netlify.app/"  # Replace with your actual production URL
+              else
+                "localhost:5173"  # For development 
+              end
 
     resource "*",
       headers: :any,
