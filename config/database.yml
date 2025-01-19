@@ -4,9 +4,9 @@ default: &default
   # For details on connection pooling, see Rails configuration guide
   # http://guides.rubyonrails.org/configuring.html#database-pooling
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  username: minhngo # Change to your username
-  password: <%= ENV['DATABASE_PASSWORD'] %> # variable previously added
-# You must remove the '+' signs to be able to migrate your database
+  username: <%= ENV['PGUSER'] %> # Change to your username
+  password: <%= ENV['PGPASSWORD'] %> # variable previously added
+  host: <%= ENV['PGHOST'] %>
 
 development:
   <<: *default
@@ -18,4 +18,4 @@ test:
 
 production:
   <<: *default
-  database: cvwo-forum-production
+  database: <%= ENV['DATABASE_URL'] %>
