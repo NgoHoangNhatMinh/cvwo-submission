@@ -14,7 +14,7 @@ class PostsController < ApplicationController
     end
 
     if params[:q].present?
-      @posts = Post.where("content LIKE ?", "%#{params[:q]}%")
+      @posts = @posts.where("content LIKE ?", "%#{params[:q]}%")
     end
 
     if params[:sort].present? && params[:sort] == "rate"
