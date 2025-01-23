@@ -16,11 +16,11 @@ end
 
 User.destroy_all
 
-5.times do |i|
-    User.create!(
+["John Smith", "Navn Navnesen", "Jane Doe", "Max Mustermann", "Gipsz Jakab", "Yamada Tarou"].each_with_index do |name, i|
+    User.find_or_create_by!(
         id: i + 1,
-        email: "test" + i.to_s + "@example.com",
-        username: "test" + i.to_s,
+        email: "test" + (i + 1).to_s + "@example.com",
+        username: name,
         password: "password"
     )
 end
@@ -33,7 +33,7 @@ Post.destroy_all
         topic: Faker::Lorem.sentence(word_count: 3),
         content: Faker::Lorem.paragraph(sentence_count: 15),
         # Arbitrary numbers --> id starts from 1
-        user_id: i % 5 + 1,
+        user_id: i % 6 + 1,
         category_id: i %  5 + 1
     )
 end
@@ -46,7 +46,7 @@ Comment.destroy_all
         id: i + 1,
         content: Faker::Lorem.paragraph(sentence_count: 3),
         # Arbitrary numbers --> id starts from 1
-        user_id: i % 5 + 1,
-        post_id: i % 20 + 1
+        user_id: i % 6 + 1,
+        post_id: i % 13 + 1
     )
 end
