@@ -46,6 +46,9 @@ gem 'jsonapi-serializer'
 # Set up active storage with Heroku cloud storage
 gem 'aws-sdk-s3', require: false
 
+# Use Faker to generate fake data
+gem "faker"
+
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
@@ -55,9 +58,6 @@ group :development, :test do
 
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false
-
-  # Use Faker to generate fake data
-  gem "faker"
 end
 
 
