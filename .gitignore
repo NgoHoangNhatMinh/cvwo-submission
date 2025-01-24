@@ -32,3 +32,6 @@
 /config/master.key
 /config/credentials.yml.enc
 config/credentials.yml.enc
+
+# Ignore development files
+/db/development.sqlite3
