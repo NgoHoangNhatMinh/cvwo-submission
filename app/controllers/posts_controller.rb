@@ -9,8 +9,8 @@ class PostsController < ApplicationController
     # Also include category data associated to the post
     @posts = Post.includes(:category).all
 
-    if params[:category_id].present?
-      @posts = @posts.where(category_id: params[:category_id])
+    if params[:category].present?
+      @posts = @posts.joins(:category).where(categories: { name: params[:category] })
     end
 
     if params[:q].present?

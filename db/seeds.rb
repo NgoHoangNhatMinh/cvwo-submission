@@ -1,7 +1,7 @@
 # This file ensures the existence of records required to run the application in every environment.
 
 Category.destroy_all
-["Academic", "Looking for Advice", "Accomodation", "Course", "Misc"].each do |category|
+["academic", "advice", "accomodation", "course", "miscellaneous"].each do |category|
   Category.find_or_create_by!(name: category)
 end
 
