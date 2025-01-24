@@ -6,20 +6,12 @@ Category.destroy_all
 end
 
 User.destroy_all
-["sudo", "JohnSmith", "NavnNavnesen", "JaneDoe", "MaxMustermann", "GipszJakab", "TanakaTarou"].each_with_index do |name, i|
-    if i == 0
-        User.create(
-            email: "test@example.com",
-            username: name,
-            password: "password"
-        )
-    else
-        User.create!(
-            email: "test#{i + 1}@example.com",
-            username: name,
-            password: "password"
-        )
-    end
+["JohnSmith", "NavnNavnesen", "JaneDoe", "MaxMustermann", "GipszJakab", "TanakaTarou"].each_with_index do |name, i|
+      User.create!(
+          email: "test#{i + 1}@example.com",
+          username: name,
+          password: "password"
+      )
 end
 
 Post.destroy_all
