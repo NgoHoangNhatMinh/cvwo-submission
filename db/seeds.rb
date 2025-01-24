@@ -1,52 +1,42 @@
-# This file should ensure the existence of records required to run the application in every environment (production,
-# development, test). The code here should be idempotent so that it can be executed at any point in every environment.
-# The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
-#
-# Example:
-#
-#   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
-#     MovieGenre.find_or_create_by!(name: genre_name)
-#   end
+# This file ensures the existence of records required to run the application in every environment.
 
 Category.destroy_all
-
-["Academic", "Looking for Advice", "Accomodation", "Course", "Misc"].each_with_index do |category, i|
-    Category.find_or_create_by!(name: category, id: i + 1)
+["Academic", "Looking for Advice", "Accomodation", "Course", "Misc"].each do |category|
+  Category.find_or_create_by!(name: category)
 end
 
 User.destroy_all
-
-["John Smith", "Navn Navnesen", "Jane Doe", "Max Mustermann", "Gipsz Jakab", "Yamada Tarou"].each_with_index do |name, i|
-    User.find_or_create_by!(
-        id: i + 1,
-        email: "test" + (i + 1).to_s + "@example.com",
-        username: name,
-        password: "password"
-    )
+["sudo", "JohnSmith", "NavnNavnesen", "JaneDoe", "MaxMustermann", "GipszJakab", "TanakaTarou"].each_with_index do |name, i|
+    if i == 0
+        User.create(
+            email: "test@example.com",
+            username: name,
+            password: "password"
+        )
+    else
+        User.create!(
+            email: "test#{i + 1}@example.com",
+            username: name,
+            password: "password"
+        )
+    end
 end
 
 Post.destroy_all
-
-20.times do |i|
-    Post.create!(
-        id: i + 1,
-        topic: Faker::Lorem.sentence(word_count: 3),
-        content: Faker::Lorem.paragraph(sentence_count: 15),
-        # Arbitrary numbers --> id starts from 1
-        user_id: i % 6 + 1,
-        category_id: i %  5 + 1
-    )
+20.times do
+  Post.create!(
+    topic: Faker::Lorem.sentence(word_count: 3),
+    content: Faker::Lorem.paragraph(sentence_count: 15),
+    user: User.all.sample,       # Randomly assigns an existing user
+    category: Category.all.sample # Randomly assigns an existing category
+  )
 end
 
-
 Comment.destroy_all
-
-60.times do |i|
-    Comment.create!(
-        id: i + 1,
-        content: Faker::Lorem.paragraph(sentence_count: 3),
-        # Arbitrary numbers --> id starts from 1
-        user_id: i % 6 + 1,
-        post_id: i % 13 + 1
-    )
+60.times do
+  Comment.create!(
+    content: Faker::Lorem.paragraph(sentence_count: 3),
+    user: User.all.sample, # Randomly assigns an existing user
+    post: Post.all.sample  # Randomly assigns an existing post
+  )
 end
