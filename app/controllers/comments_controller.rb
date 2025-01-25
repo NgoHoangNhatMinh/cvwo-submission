@@ -18,7 +18,10 @@ class CommentsController < ApplicationController
   # Fetch all the comments of a specific user
   def user_comments
     @user = User.find(params[:user_id])
-    @comments = @user.comments.order(created_at: :desc)
+    @comments = @user.comments.order(created_at: :desc).as_json(include: { 
+      user: { only: [:username] }, 
+      post: { only: [:id, :topic]}
+    })
     
     render json: @comments
   end
@@ -33,7 +36,8 @@ class CommentsController < ApplicationController
     @comment = current_user.comments.new(comment_params)
 
     if @comment.save
-      render json: @comment, status: :created, location: @comment
+      # Return associated user
+      render json: @comment.as_json(include: { user: { only: [:username] } }), status: :created, location: @comment
     else
       render json: @comment.errors, status: :unprocessable_entity
     end
