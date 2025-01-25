@@ -39,7 +39,10 @@ class PostsController < ApplicationController
 
   # GET /posts/1
   def show
-    render json: @post.as_json(include: { category: { only: [:id, :name] } })
+    render json: @post.as_json(include: { 
+      category: { only: [:id, :name] },
+      user: { only: [:id, :username]}
+    })
   end
 
   # POST /posts
