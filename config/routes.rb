@@ -23,8 +23,8 @@ Rails.application.routes.draw do
     resources :comments, only: [:index]
   end
 
-  get '/user/:user_id/posts', to: 'posts#user_posts'
-  get '/user/:user_id/comments', to: 'comments#user_comments'
+  get '/users/:user_id/posts', to: 'posts#user_posts'
+  get '/users/:user_id/comments', to: 'comments#user_comments'
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

@@ -39,9 +39,9 @@ class PostsController < ApplicationController
   # Fetch all the posts of a specific user
   def user_posts
     @user = User.find(params[:user_id])
-    @posts = @user.posts.order(created_at: :desc)
+    @posts = @user.posts.includes(:category).order(created_at: :desc)
     
-    render json: @posts
+    render json: @posts.as_json(include: { category: { only: [:id, :name] } })
   end
 
   # GET /posts/1
