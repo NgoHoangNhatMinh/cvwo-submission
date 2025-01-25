@@ -24,8 +24,15 @@ class PostsController < ApplicationController
       @posts = @posts.order(created_at: :desc)
     end
 
+    # Add comment counts and category to each post
+    @posts = @posts.map do |post|
+      post_data = post.as_json(include: { category: { only: [:id, :name] } })
+      post_data[:comment_count] = post.comments.count
+      post_data
+    end
+
     # Also include category data associated to the post
-    render json: @posts.as_json(include: { category: { only: [:id, :name] } })
+    render json: @posts
   end
 
   # GET /user/:user_id/posts
