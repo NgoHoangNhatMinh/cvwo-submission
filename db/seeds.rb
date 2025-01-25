@@ -20,15 +20,17 @@ Post.destroy_all
     topic: Faker::Lorem.sentence(word_count: 3),
     content: Faker::Lorem.paragraph(sentence_count: 15),
     user: User.all.sample,       # Randomly assigns an existing user
-    category: Category.all.sample # Randomly assigns an existing category
+    category: Category.all.sample, # Randomly assigns an existing category
+    created_at: rand(2.years).seconds.ago # Randomly create a date
   )
 end
 
 Comment.destroy_all
-60.times do
+100.times do
   Comment.create!(
     content: Faker::Lorem.paragraph(sentence_count: 3),
     user: User.all.sample, # Randomly assigns an existing user
-    post: Post.all.sample  # Randomly assigns an existing post
+    post: Post.all.sample,  # Randomly assigns an existing post
+    created_at: rand(2.years).seconds.ago # Randomly create a date
   )
 end
